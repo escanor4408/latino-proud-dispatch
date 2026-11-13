@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Latino Proud Dispatch — Despacho de camiones para owner-operators</title>
+<meta name="description" content="Despacho de carga premium para owner-operators y pequeñas flotas de la comunidad latina en Estados Unidos. Cargas verificadas, gestión de MC/DOT/UCR/BOC-3 y soporte bilingüe." />
+<meta name="theme-color" content="#070A10" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+/* ===================== BASE ===================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+:root{
+  --bg:#070A10; --bg-2:#0A0F18; --surface:#0E1522; --surface-2:#121B2B;
+  --line:rgba(255,255,255,.09); --line-strong:rgba(255,255,255,.16);
+  --text:#EDF1F7; --muted:#94A2B8;
+  --gold:#E9B44C; --gold-2:#F7D795; --gold-glow:rgba(233,180,76,.35);
+  --radius:22px; --radius-sm:14px; --max:1200px; --nav-h:78px;
+  --ease:cubic-bezier(.22,.72,.24,1);
+}
+
+html{ scroll-behavior:smooth; scroll-padding-top:calc(var(--nav-h) + 18px); -webkit-text-size-adjust:100%; }
+
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size:16px; line-height:1.65; overflow-x:hidden;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+
+img, video, svg{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; }
+ul{ margin:0; padding:0; list-style:none; }
+h1,h2,h3,h4{ font-family:'Sora', system-ui, sans-serif; font-weight:700; line-height:1.1; letter-spacing:-.025em; margin:0; text-wrap:balance; }
+p{ margin:0; }
+::selection{ background:var(--gold); color:#0A0A0A; }
+:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; border-radius:6px; }
+
+.skip-link{ position:absolute; left:16px; top:-100px; background:var(--gold); color:#08111C; padding:12px 20px; border-radius:10px; font-weight:600; z-index:999; transition:top .25s var(--ease); }
+.skip-link:focus{ top:16px; }
+
+/* ===================== LAYOUT ===================== */
+.container{ width:100%; max-width:var(--max); margin-inline:auto; padding-inline:clamp(20px, 5vw, 48px); }
+section{ position:relative; }
+.section-pad{ padding-block:clamp(72px, 9vw, 130px); }
+
+/* ===================== NAVBAR ===================== */
+.site-header{
+  position:fixed; inset:0 0 auto 0; z-index:100; height:var(--nav-h);
+  display:flex; align-items:center;
+  transition:background .35s var(--ease), backdrop-filter .35s var(--ease), border-color .35s var(--ease);
+  border-bottom:1px solid transparent;
+}
+.site-header.is-scrolled{
+  background:rgba(7,10,16,.82);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);
+  backdrop-filter:blur(18px) saturate(160%);
+  border-bottom-color:var(--line);
+}
+
+.nav{ display:flex; align-items:center; justify-content:space-between; gap:20px; width:100%; }
+
+.brand{ display:flex; align-items:center; gap:12px; flex-shrink:0; }
+.brand__mark{
+  width:44px; height:44px; border-radius:13px; display:grid; place-items:center;
+  background:linear-gradient(145deg, var(--gold), #C58C22); color:#0A1018;
+  box-shadow:0 8px 24px -8px var(--gold-glow), inset 0 1px 0 rgba(255,255,255,.45); flex-shrink:0;
+}
+.brand__mark svg{ width:24px; height:24px; }
+.brand__text{ display:flex; flex-direction:column; line-height:1; }
+.brand__text strong{ font-family:'Sora', sans-serif; font-size:15px; font-weight:800; letter-spacing:.09em; color:#fff; }
+.brand__text small{ font-size:10px; letter-spacing:.34em; color:var(--gold); font-weight:600; margin-top:5px; }
+
+.nav__links{ display:flex; align-items:center; gap:4px; }
+.nav__links a{ position:relative; padding:10px 13px; font-size:14px; font-weight:500; color:#C4CEDD; border-radius:10px; transition:color .25s var(--ease), background .25s var(--ease); }
+.nav__links a:hover{ color:#fff; background:rgba(255,255,255,.055); }
+
+.nav__actions{ display:flex; align-items:center; gap:10px; }
+
+/* Selector de idioma con banderas */
+.lang-toggle{
+  display:flex; align-items:center; gap:4px; padding:4px;
+  background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:999px;
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); flex-shrink:0;
+}
+.lang-btn{
+  display:grid; place-items:center; width:34px; height:34px; padding:0;
+  border-radius:50%; border:1.5px solid transparent; background:transparent;
+  cursor:pointer; overflow:hidden; transition:transform .28s var(--ease), border-color .28s var(--ease), box-shadow .28s var(--ease);
+  -webkit-tap-highlight-color:transparent;
+}
+.lang-btn svg{ width:22px; height:22px; border-radius:50%; box-shadow:0 0 0 .5px rgba(255,255,255,.15); transition:transform .3s var(--ease); }
+.lang-btn:hover{ transform:translateY(-1px) scale(1.06); }
+.lang-btn.is-active{
+  border-color:var(--gold);
+  box-shadow:0 0 0 2px rgba(233,180,76,.22), 0 6px 14px -6px var(--gold-glow);
+}
+.lang-btn.is-active svg{ transform:scale(1.05); }
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  padding:14px 26px; border-radius:999px; font-weight:600; font-size:15px;
+  letter-spacing:-.01em; border:1px solid transparent; cursor:pointer;
+  white-space:nowrap; transition:transform .28s var(--ease), box-shadow .28s var(--ease),
+    background .28s var(--ease), border-color .28s var(--ease), color .28s var(--ease);
+  will-change:transform;
+}
+.btn svg{ width:18px; height:18px; flex-shrink:0; }
+
+.btn--primary{
+  background:linear-gradient(140deg, var(--gold-2), var(--gold) 45%, #D09B32);
+  color:#0A1018;
+  box-shadow:0 14px 34px -14px var(--gold-glow), inset 0 1px 0 rgba(255,255,255,.5);
+}
+.btn--primary:hover{ transform:translateY(-2px); box-shadow:0 20px 44px -14px rgba(233,180,76,.55), inset 0 1px 0 rgba(255,255,255,.6); }
+
+.btn--ghost{
+  background:rgba(255,255,255,.045); border-color:var(--line-strong); color:#EAF0F8;
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+}
+.btn--ghost:hover{ background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.32); transform:translateY(-2px); }
+
+.btn--sm{ padding:11px 20px; font-size:14px; }
+
+/* Botón del chatbot (hero) */
+.btn--chatbot{
+  background:linear-gradient(140deg, rgba(233,180,76,.18), rgba(233,180,76,.05));
+  border:1px solid rgba(233,180,76,.45); color:var(--gold-2);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  box-shadow:0 10px 24px -14px var(--gold-glow), inset 0 1px 0 rgba(255,255,255,.1);
+  position:relative; overflow:hidden;
+}
+.btn--chatbot::before{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(115deg, transparent 35%, rgba(255,255,255,.14) 48%, rgba(255,255,255,.14) 52%, transparent 65%);
+  transform:translateX(-100%); animation:chatbotShine 5s cubic-bezier(.4,0,.2,1) infinite; pointer-events:none;
+}
+@keyframes chatbotShine{ 0%{ transform:translateX(-100%); } 55%{ transform:translateX(100%); } 100%{ transform:translateX(100%); } }
+.btn--chatbot:hover{
+  background:linear-gradient(140deg, rgba(233,180,76,.32), rgba(233,180,76,.14));
+  border-color:rgba(233,180,76,.75); color:#fff;
+  transform:translateY(-2px);
+  box-shadow:0 16px 34px -14px rgba(233,180,76,.7), inset 0 1px 0 rgba(255,255,255,.18);
+}
+.btn--chatbot .pulse-dot{
+  width:8px; height:8px; border-radius:50%; background:var(--gold);
+  box-shadow:0 0 0 0 rgba(233,180,76,.55); animation:chatbotDot 2.2s infinite; flex-shrink:0;
+}
+@keyframes chatbotDot{
+  0%,100%{ box-shadow:0 0 0 0 rgba(233,180,76,.55); }
+  55%{ box-shadow:0 0 0 8px rgba(233,180,76,0); }
+}
+
+.nav__toggle{
+  display:none; width:46px; height:46px; border-radius:13px;
+  background:rgba(255,255,255,.06); border:1px solid var(--line);
+  cursor:pointer; place-items:center; padding:0;
+}
+.nav__toggle span{ display:block; width:20px; height:2px; background:#EAF0F8; border-radius:2px; position:relative; transition:transform .3s var(--ease), background .3s var(--ease); }
+.nav__toggle span::before, .nav__toggle span::after{ content:''; position:absolute; left:0; width:20px; height:2px; background:#EAF0F8; border-radius:2px; transition:transform .3s var(--ease), top .3s var(--ease); }
+.nav__toggle span::before{ top:-6px; } .nav__toggle span::after{ top:6px; }
+body.menu-open .nav__toggle span{ background:transparent; }
+body.menu-open .nav__toggle span::before{ top:0; transform:rotate(45deg); }
+body.menu-open .nav__toggle span::after{ top:0; transform:rotate(-45deg); }
+
+.mobile-menu{
+  position:fixed; inset:0; z-index:95; background:rgba(7,10,16,.97);
+  -webkit-backdrop-filter:blur(24px); backdrop-filter:blur(24px);
+  padding:calc(var(--nav-h) + 32px) clamp(20px,6vw,40px) 40px;
+  display:flex; flex-direction:column; gap:8px;
+  opacity:0; visibility:hidden; transform:translateY(-12px);
+  transition:opacity .35s var(--ease), transform .35s var(--ease), visibility .35s;
+  overflow-y:auto;
+}
+body.menu-open .mobile-menu{ opacity:1; visibility:visible; transform:none; }
+.mobile-menu a.m-link{
+  font-family:'Sora', sans-serif; font-size:clamp(22px, 5.5vw, 30px); font-weight:600;
+  letter-spacing:-.02em; padding:14px 0; border-bottom:1px solid var(--line); color:#E7EDF6;
+  transition:color .25s var(--ease), padding-left .25s var(--ease);
+}
+.mobile-menu a.m-link:hover{ color:var(--gold); padding-left:8px; }
+.mobile-menu .btn{ margin-top:26px; width:100%; }
+.mobile-menu__contact{ margin-top:auto; padding-top:28px; display:grid; gap:6px; font-size:14px; color:var(--muted); }
+.mobile-menu__contact a{ color:var(--gold); font-weight:600; word-break:break-word; }
+.mobile-menu__contact .socials{ margin-top:16px; }
+.mobile-menu__lang{
+  display:flex; align-items:center; gap:10px; padding:16px 0 0; margin-top:16px;
+  border-top:1px solid var(--line);
+  font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:#7F8DA2; font-weight:600;
+}
+.mobile-menu__lang .lang-toggle{ margin-left:auto; padding:3px; }
+.mobile-menu__lang .lang-btn{ width:38px; height:38px; }
+.mobile-menu__lang .lang-btn svg{ width:24px; height:24px; }
+
+/* ===================== HERO 16:9 ===================== */
+.hero{ position:relative; width:100%; aspect-ratio:16 / 9; display:flex; align-items:flex-end; overflow:hidden; isolation:isolate; background:#05070B; }
+.hero__media{ position:absolute; inset:0; z-index:-2; overflow:hidden; background:#05070B; }
+.hero__media video{ width:100%; height:100%; object-fit:cover; object-position:center; }
+.hero__overlay{
+  position:absolute; inset:0; z-index:-1;
+  background:
+    linear-gradient(180deg, rgba(7,10,16,.92) 0%, rgba(7,10,16,.45) 32%, rgba(7,10,16,.55) 62%, rgba(7,10,16,.97) 100%),
+    linear-gradient(100deg, rgba(7,10,16,.88) 0%, rgba(7,10,16,.35) 55%, rgba(7,10,16,.1) 100%);
+}
+.hero__overlay::after{ content:''; position:absolute; inset:0; background:radial-gradient(120% 80% at 15% 100%, rgba(233,180,76,.14), transparent 60%); }
+.hero__inner{ position:relative; width:100%; padding-bottom:clamp(36px, 5.5vw, 84px); padding-top:calc(var(--nav-h) + 24px); }
+.hero__content{ max-width:760px; }
+
+.eyebrow{
+  display:inline-flex; align-items:center; gap:10px; padding:8px 16px 8px 10px; border-radius:999px;
+  background:rgba(233,180,76,.1); border:1px solid rgba(233,180,76,.28); color:var(--gold-2);
+  font-size:12.5px; font-weight:600; letter-spacing:.11em; text-transform:uppercase;
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+}
+.eyebrow .dot{ width:7px; height:7px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 4px rgba(233,180,76,.18); animation:pulse 2.4s infinite; }
+@keyframes pulse{ 0%,100%{ box-shadow:0 0 0 4px rgba(233,180,76,.18); } 50%{ box-shadow:0 0 0 9px rgba(233,180,76,0); } }
+
+.hero h1{ font-size:clamp(2.05rem, 5vw, 4.15rem); font-weight:800; margin-top:22px; letter-spacing:-.035em; text-shadow:0 2px 30px rgba(0,0,0,.55); }
+.hero h1 .accent{ background:linear-gradient(100deg, var(--gold-2), var(--gold) 55%, #D89A2C); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.hero__sub{ margin-top:22px; font-size:clamp(.98rem, 1.6vw, 1.19rem); color:#B9C5D6; max-width:620px; line-height:1.7; }
+
+.hero__actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top:34px; }
+.hero__actions .btn{ flex:0 1 auto; }
+.hero__actions .btn--chatbot{ flex-basis:100%; justify-content:flex-start; max-width:100%; }
+
+.hero__stats{ display:flex; flex-wrap:wrap; gap:clamp(20px, 4vw, 52px); margin-top:clamp(30px, 4.5vw, 56px); padding-top:clamp(22px, 3vw, 34px); border-top:1px solid rgba(255,255,255,.12); }
+.stat__num{ font-family:'Sora', sans-serif; font-size:clamp(1.3rem, 2.6vw, 1.9rem); font-weight:800; color:#fff; letter-spacing:-.02em; line-height:1; }
+.stat__num em{ font-style:normal; color:var(--gold); }
+.stat__label{ font-size:12.5px; color:#93A2B7; letter-spacing:.05em; margin-top:8px; text-transform:uppercase; font-weight:500; }
+
+/* ===================== MARQUEE ===================== */
+.marquee{ border-block:1px solid var(--line); background:var(--bg-2); padding-block:18px; overflow:hidden; position:relative; -webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee__track{ display:flex; gap:56px; width:max-content; animation:scroll 38s linear infinite; }
+.marquee:hover .marquee__track{ animation-play-state:paused; }
+.marquee__item{ display:flex; align-items:center; gap:12px; font-family:'Sora', sans-serif; font-size:13.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#7E8DA3; white-space:nowrap; }
+.marquee__item::before{ content:''; width:5px; height:5px; border-radius:50%; background:var(--gold); opacity:.75; flex-shrink:0; }
+@keyframes scroll{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+/* ===================== HEADINGS ===================== */
+.section-head{ max-width:720px; margin-bottom:clamp(42px, 5vw, 68px); }
+.section-head--center{ margin-inline:auto; text-align:center; }
+.section-tag{ display:inline-flex; align-items:center; gap:9px; font-size:12.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:18px; }
+.section-tag::before{ content:''; width:26px; height:1.5px; background:linear-gradient(90deg, var(--gold), transparent); }
+.section-head--center .section-tag::before{ display:none; }
+.section-head h2{ font-size:clamp(1.85rem, 3.9vw, 2.95rem); font-weight:800; letter-spacing:-.03em; }
+.section-head p{ margin-top:18px; color:var(--muted); font-size:clamp(.98rem, 1.5vw, 1.08rem); line-height:1.75; }
+
+/* ===================== SERVICIOS ===================== */
+.services{ background:radial-gradient(80% 55% at 50% 0%, rgba(233,180,76,.07), transparent 70%), var(--bg); }
+.cards{ display:grid; grid-template-columns:repeat(auto-fit, minmax(265px, 1fr)); gap:clamp(16px, 2vw, 24px); }
+
+.card{
+  position:relative; padding:clamp(26px, 3vw, 34px); border-radius:var(--radius);
+  background:linear-gradient(165deg, rgba(255,255,255,.055), rgba(255,255,255,.012));
+  border:1px solid var(--line); overflow:hidden;
+  transition:transform .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
+  display:flex; flex-direction:column;
+}
+.card::before{ content:''; position:absolute; inset:0; background:radial-gradient(70% 60% at 50% 0%, rgba(233,180,76,.14), transparent 70%); opacity:0; transition:opacity .45s var(--ease); pointer-events:none; }
+.card:hover{ transform:translateY(-6px); border-color:rgba(233,180,76,.35); box-shadow:0 28px 60px -30px rgba(0,0,0,.9); }
+.card:hover::before{ opacity:1; }
+
+.card__icon{ width:56px; height:56px; border-radius:16px; display:grid; place-items:center; background:linear-gradient(150deg, rgba(233,180,76,.2), rgba(233,180,76,.05)); border:1px solid rgba(233,180,76,.28); color:var(--gold); margin-bottom:24px; transition:transform .4s var(--ease); }
+.card:hover .card__icon{ transform:scale(1.06) rotate(-3deg); }
+.card__icon svg{ width:26px; height:26px; }
+.card h3{ font-size:1.19rem; font-weight:700; margin-bottom:12px; letter-spacing:-.02em; }
+.card p{ color:var(--muted); font-size:.95rem; line-height:1.7; flex-grow:1; }
+.card__list{ margin-top:20px; display:grid; gap:9px; }
+.card__list li{ display:flex; align-items:flex-start; gap:10px; font-size:.875rem; color:#B4C0D1; }
+.card__list li::before{
+  content:''; width:15px; height:15px; flex-shrink:0; margin-top:4px; border-radius:50%;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230A1018' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/9px no-repeat,
+    linear-gradient(140deg, var(--gold-2), var(--gold));
+}
+
+/* ===================== NOSOTROS ===================== */
+.about{ background:var(--bg-2); border-block:1px solid var(--line); }
+.about__grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(36px, 6vw, 80px); align-items:center; }
+.checklist{ display:grid; gap:18px; margin-top:34px; }
+.checklist li{ display:flex; gap:16px; align-items:flex-start; }
+.checklist .ic{ width:30px; height:30px; flex-shrink:0; border-radius:9px; display:grid; place-items:center; background:rgba(233,180,76,.13); border:1px solid rgba(233,180,76,.3); color:var(--gold); margin-top:2px; }
+.checklist .ic svg{ width:15px; height:15px; }
+.checklist strong{ display:block; font-size:1rem; font-weight:600; color:#F0F4FA; letter-spacing:-.01em; }
+.checklist span{ display:block; font-size:.9rem; color:var(--muted); margin-top:3px; line-height:1.6; }
+
+.panel{
+  position:relative; border-radius:26px; padding:clamp(26px, 3.4vw, 40px);
+  background:
+    radial-gradient(110% 90% at 100% 0%, rgba(233,180,76,.2), transparent 58%),
+    linear-gradient(160deg, #14202F, #0A1018 70%);
+  border:1px solid var(--line-strong); overflow:hidden;
+  box-shadow:0 40px 90px -50px #000;
+}
+.panel::after{ content:''; position:absolute; right:-60px; bottom:-80px; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle, rgba(233,180,76,.22), transparent 68%); pointer-events:none; }
+.panel__title{ font-family:'Sora', sans-serif; font-size:1.05rem; font-weight:700; letter-spacing:.03em; color:#F2F6FC; margin-bottom:6px; }
+.panel__sub{ font-size:.85rem; color:var(--muted); margin-bottom:28px; }
+.panel__stats{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.pstat{ padding:20px 18px; border-radius:16px; background:rgba(255,255,255,.045); border:1px solid var(--line); transition:background .3s var(--ease), border-color .3s var(--ease); }
+.pstat:hover{ background:rgba(255,255,255,.075); border-color:rgba(233,180,76,.3); }
+.pstat b{ display:block; font-family:'Sora', sans-serif; font-size:1.6rem; font-weight:800; color:var(--gold); letter-spacing:-.03em; line-height:1; }
+.pstat small{ display:block; font-size:.775rem; color:var(--muted); margin-top:9px; letter-spacing:.04em; text-transform:uppercase; font-weight:500; }
+
+/* ===================== PROCESO ===================== */
+.process{ background:var(--bg); }
+.steps{ display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:clamp(18px, 2.4vw, 28px); counter-reset:step; }
+.step{ position:relative; padding-top:30px; border-top:1px solid var(--line); transition:border-color .35s var(--ease); }
+.step::before{ counter-increment:step; content:'0' counter(step); font-family:'Sora', sans-serif; font-size:clamp(2.1rem, 4vw, 2.9rem); font-weight:800; line-height:1; letter-spacing:-.05em; color:transparent; -webkit-text-stroke:1.4px rgba(233,180,76,.42); display:block; margin-bottom:18px; transition:-webkit-text-stroke-color .35s var(--ease), transform .35s var(--ease); }
+.step:hover::before{ -webkit-text-stroke-color:var(--gold); transform:translateY(-2px); }
+.step:hover{ border-top-color:rgba(233,180,76,.5); }
+.step h3{ font-size:1.06rem; font-weight:700; margin-bottom:10px; }
+.step p{ font-size:.92rem; color:var(--muted); line-height:1.68; }
+
+/* ===================== BANNER HOTSHOT ===================== */
+.banner{
+  position:relative; border-radius:28px; overflow:hidden; padding:clamp(34px, 5.5vw, 66px);
+  background:
+    radial-gradient(90% 140% at 8% 0%, rgba(233,180,76,.26), transparent 55%),
+    linear-gradient(120deg, #131E2D 0%, #0A1018 60%);
+  border:1px solid rgba(233,180,76,.24);
+  display:grid; grid-template-columns:1.35fr auto; gap:clamp(26px, 4vw, 56px); align-items:center;
+}
+.banner::before{ content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size:52px 52px; -webkit-mask-image:radial-gradient(80% 100% at 100% 0%, #000, transparent 72%); mask-image:radial-gradient(80% 100% at 100% 0%, #000, transparent 72%); pointer-events:none; }
+.banner__content{ position:relative; }
+.banner h2{ font-size:clamp(1.65rem, 3.3vw, 2.5rem); font-weight:800; letter-spacing:-.03em; max-width:640px; }
+.banner p{ margin-top:16px; color:#A9B6C8; font-size:clamp(.95rem, 1.5vw, 1.05rem); max-width:560px; line-height:1.75; }
+.banner__actions{ position:relative; display:flex; flex-direction:column; gap:12px; min-width:230px; }
+.banner__badges{ display:flex; flex-wrap:wrap; gap:8px; margin-top:26px; }
+.badge{ padding:7px 14px; border-radius:999px; font-size:12px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--gold-2); background:rgba(233,180,76,.1); border:1px solid rgba(233,180,76,.26); }
+
+/* ===================== TESTIMONIOS ===================== */
+.testimonials{ background:var(--bg-2); border-block:1px solid var(--line); }
+.quotes{ display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:clamp(16px, 2vw, 24px); }
+.quote{ padding:clamp(26px, 3vw, 34px); border-radius:var(--radius); background:linear-gradient(165deg, rgba(255,255,255,.05), rgba(255,255,255,.012)); border:1px solid var(--line); display:flex; flex-direction:column; gap:20px; transition:transform .4s var(--ease), border-color .4s var(--ease); }
+.quote:hover{ transform:translateY(-5px); border-color:rgba(233,180,76,.28); }
+.stars{ display:flex; gap:3px; color:var(--gold); } .stars svg{ width:16px; height:16px; }
+.quote p{ font-size:.97rem; color:#C6D1E0; line-height:1.75; flex-grow:1; }
+.quote footer{ display:flex; align-items:center; gap:13px; padding-top:18px; border-top:1px solid var(--line); }
+.avatar{ width:42px; height:42px; border-radius:50%; display:grid; place-items:center; font-family:'Sora', sans-serif; font-weight:700; font-size:14px; color:#0A1018; background:linear-gradient(145deg, var(--gold-2), #C8901F); flex-shrink:0; }
+.quote cite{ font-style:normal; display:block; font-weight:600; font-size:.9rem; color:#F0F4FA; }
+.quote footer small{ display:block; font-size:.78rem; color:var(--muted); margin-top:2px; }
+
+/* ===================== CONTACTO ===================== */
+.contact{ background:radial-gradient(70% 60% at 80% 100%, rgba(233,180,76,.09), transparent 65%), var(--bg); }
+.contact__grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(34px, 5vw, 72px); align-items:start; }
+
+.info-list{ display:grid; gap:14px; margin-top:34px; }
+.info-item{ display:flex; gap:16px; align-items:center; padding:16px 18px; border-radius:16px; background:rgba(255,255,255,.032); border:1px solid var(--line); transition:border-color .3s var(--ease), background .3s var(--ease), transform .3s var(--ease); }
+.info-item:hover{ border-color:rgba(233,180,76,.3); background:rgba(255,255,255,.055); transform:translateX(4px); }
+.info-item .ic{ width:42px; height:42px; flex-shrink:0; border-radius:12px; display:grid; place-items:center; background:rgba(233,180,76,.12); border:1px solid rgba(233,180,76,.26); color:var(--gold); }
+.info-item .ic svg{ width:19px; height:19px; }
+.info-item small{ display:block; font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:#7F8DA2; font-weight:600; margin-bottom:3px; }
+.info-item strong{ font-size:.95rem; font-weight:600; color:#EDF2F9; letter-spacing:-.01em; word-break:break-word; }
+
+/* CTA WhatsApp premium */
+.wa-cta{
+  position:relative; display:flex; align-items:center; gap:16px;
+  padding:18px 20px; margin-top:18px; border-radius:18px;
+  background:linear-gradient(140deg, rgba(37,211,102,.14), rgba(37,211,102,.04));
+  border:1px solid rgba(37,211,102,.4);
+  box-shadow:0 14px 34px -20px rgba(37,211,102,.75), inset 0 1px 0 rgba(255,255,255,.08);
+  overflow:hidden;
+  transition:transform .32s var(--ease), box-shadow .32s var(--ease), border-color .32s var(--ease), background .32s var(--ease);
+}
+.wa-cta::before{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(115deg, transparent 38%, rgba(255,255,255,.12) 48%, rgba(255,255,255,.12) 52%, transparent 62%);
+  transform:translateX(-100%); animation:chatbotShine 6s cubic-bezier(.4,0,.2,1) infinite; pointer-events:none;
+}
+.wa-cta:hover{
+  transform:translateY(-3px);
+  border-color:rgba(37,211,102,.75);
+  background:linear-gradient(140deg, rgba(37,211,102,.24), rgba(37,211,102,.1));
+  box-shadow:0 20px 44px -18px rgba(37,211,102,.9), inset 0 1px 0 rgba(255,255,255,.14);
+}
+.wa-cta__icon{
+  position:relative; z-index:1;
+  width:48px; height:48px; flex-shrink:0; border-radius:14px;
+  display:grid; place-items:center;
+  background:linear-gradient(145deg, #38D66E, #1FA954); color:#fff;
+  box-shadow:0 10px 22px -10px rgba(31,169,84,.9), inset 0 1px 0 rgba(255,255,255,.4);
+}
+.wa-cta__icon svg{ width:26px; height:26px; }
+.wa-cta__body{ position:relative; z-index:1; flex:1; min-width:0; }
+.wa-cta__body strong{ display:block; font-family:'Sora', sans-serif; font-size:.98rem; font-weight:700; color:#E8FAEE; letter-spacing:-.01em; }
+.wa-cta__body small{ display:block; font-size:.8rem; color:#94D9AE; margin-top:3px; font-weight:500; }
+.wa-cta__arrow{ position:relative; z-index:1; flex-shrink:0; color:#7BE7A4; transition:transform .32s var(--ease); }
+.wa-cta__arrow svg{ width:20px; height:20px; }
+.wa-cta:hover .wa-cta__arrow{ transform:translateX(4px); color:#fff; }
+
+.contact-socials{ margin-top:26px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.contact-socials__label{ font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#7F8DA2; }
+.contact-socials .socials{ margin-top:0; }
+
+.form-card{ padding:clamp(24px, 3.4vw, 40px); border-radius:26px; background:linear-gradient(165deg, rgba(255,255,255,.06), rgba(255,255,255,.015)); border:1px solid var(--line-strong); box-shadow:0 40px 90px -55px #000; }
+.form-card h3{ font-size:1.35rem; font-weight:700; letter-spacing:-.02em; }
+.form-card > p{ color:var(--muted); font-size:.92rem; margin-top:8px; margin-bottom:28px; }
+
+.form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.field{ display:flex; flex-direction:column; gap:8px; }
+.field--full{ grid-column:1 / -1; }
+.field label{ font-size:12.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#8F9DB2; }
+.field input, .field select, .field textarea{
+  width:100%; padding:14px 16px; border-radius:13px; background:rgba(255,255,255,.04);
+  border:1px solid var(--line); color:#EDF2F9; font-family:inherit; font-size:.95rem;
+  transition:border-color .25s var(--ease), background .25s var(--ease), box-shadow .25s var(--ease);
+  -webkit-appearance:none; appearance:none;
+}
+.field textarea{ resize:vertical; min-height:104px; }
+.field select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394A2B8' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 16px center; background-size:16px; padding-right:44px; cursor:pointer;
+}
+.field select option{ background:#0E1522; color:#EDF2F9; }
+.field input::placeholder, .field textarea::placeholder{ color:#61708A; }
+.field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:rgba(233,180,76,.6); background:rgba(255,255,255,.07); box-shadow:0 0 0 4px rgba(233,180,76,.1); }
+
+.form-grid .btn--primary{ grid-column:1 / -1; width:100%; margin-top:6px; padding-block:16px; }
+.form-note{ grid-column:1 / -1; font-size:.78rem; color:#71809A; text-align:center; line-height:1.6; }
+.form-success{ display:none; align-items:center; gap:12px; padding:16px 18px; border-radius:14px; background:rgba(60,200,130,.1); border:1px solid rgba(60,200,130,.35); color:#8FE9BA; font-size:.9rem; grid-column:1 / -1; }
+.form-success.show{ display:flex; }
+
+/* ===================== FOOTER ===================== */
+.site-footer{ background:var(--bg-2); border-top:1px solid var(--line); padding-top:clamp(56px, 7vw, 84px); }
+.footer__grid{ display:grid; grid-template-columns:1.6fr 1fr 1fr 1.2fr; gap:clamp(28px, 4vw, 52px); padding-bottom:clamp(40px, 5vw, 60px); }
+.footer__brand p{ color:var(--muted); font-size:.9rem; line-height:1.75; margin-top:20px; max-width:320px; }
+.footer__col h4{ font-size:12.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#7F8DA2; margin-bottom:20px; }
+.footer__col ul{ display:grid; gap:12px; }
+.footer__col a{ font-size:.9rem; color:#B3BFD0; transition:color .25s var(--ease), padding-left .25s var(--ease); display:inline-block; word-break:break-word; }
+.footer__col a:hover{ color:var(--gold); padding-left:4px; }
+.socials{ display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; }
+.socials a{ width:40px; height:40px; border-radius:12px; display:grid; place-items:center; background:rgba(255,255,255,.045); border:1px solid var(--line); color:#B3BFD0; transition:all .28s var(--ease); }
+.socials a:hover{ color:#0A1018; background:var(--gold); border-color:var(--gold); transform:translateY(-3px); }
+.socials svg{ width:17px; height:17px; }
+.footer__bottom{ border-top:1px solid var(--line); padding-block:26px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px; font-size:.82rem; color:#6E7C92; }
+.footer__bottom a{ color:#8B99AF; } .footer__bottom a:hover{ color:var(--gold); }
+
+/* ===================== FLOATING DOCK ===================== */
+.float-dock{ position:fixed; right:clamp(14px, 2.5vw, 24px); bottom:clamp(14px, 2.5vw, 24px); z-index:91; display:flex; flex-direction:column; align-items:center; gap:11px; transition:opacity .38s var(--ease), transform .38s var(--ease), visibility .38s; }
+.float-dock.is-hidden{ opacity:0; visibility:hidden; transform:translateY(14px) scale(.94); pointer-events:none; }
+
+.dock-btn{ position:relative; display:grid; place-items:center; padding:0; border:none; cursor:pointer; text-decoration:none; will-change:transform; -webkit-tap-highlight-color:transparent; isolation:isolate; }
+.dock-btn svg{ width:22px; height:22px; display:block; }
+
+.dock-btn--ia{
+  width:64px; height:64px; border-radius:20px;
+  background:linear-gradient(145deg, #FFE5AE 0%, var(--gold) 45%, #C0851A 100%);
+  color:#0A1018; font-family:'Sora', sans-serif; font-weight:800; letter-spacing:-.03em;
+  border:1px solid rgba(255,255,255,.4);
+  box-shadow:
+    0 16px 36px -12px rgba(233,180,76,.85),
+    0 6px 16px -4px rgba(0,0,0,.55),
+    inset 0 1.5px 0 rgba(255,255,255,.7),
+    inset 0 -2px 6px rgba(0,0,0,.18);
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.dock-btn--ia::before{ content:''; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(135deg, rgba(255,255,255,.42) 0%, transparent 42%, transparent 60%, rgba(255,255,255,.15) 100%); pointer-events:none; }
+.dock-btn--ia::after{ content:''; position:absolute; inset:-4px; border-radius:inherit; border:2px solid rgba(233,180,76,.55); opacity:0; animation:iaPulse 3.2s ease-in-out infinite; pointer-events:none; }
+@keyframes iaPulse{ 0%, 100%{ transform:scale(1); opacity:0; } 55%{ transform:scale(1.18); opacity:.65; } }
+.dock-btn--ia:hover{ transform:translateY(-3px) scale(1.04); box-shadow: 0 22px 46px -12px rgba(233,180,76,1), 0 8px 20px -4px rgba(0,0,0,.65), inset 0 1.5px 0 rgba(255,255,255,.85); }
+.dock-btn__label{ position:relative; z-index:1; font-size:21px; font-weight:800; line-height:1; letter-spacing:-.02em; transform:translateY(-.5px); }
+
+.dock-btn--social{
+  width:50px; height:50px; border-radius:15px; overflow:hidden;
+  color:#C7D2E2;
+  background:linear-gradient(160deg, rgba(22,30,45,.96), rgba(10,15,24,.96));
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow: 0 10px 22px -10px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,255,255,.09);
+  -webkit-backdrop-filter:blur(14px) saturate(150%);
+  backdrop-filter:blur(14px) saturate(150%);
+  transition: transform .5s cubic-bezier(.34, 1.56, .64, 1), box-shadow .45s var(--ease), border-color .45s var(--ease), color .4s var(--ease);
+}
+.dock-btn__bg{ position:absolute; inset:0; border-radius:inherit; opacity:0; transition:opacity .5s var(--ease); z-index:0; pointer-events:none; }
+.dock-btn--fb .dock-btn__bg{ background:linear-gradient(145deg, #1877F2 0%, #0A4BA8 100%); }
+.dock-btn--ig .dock-btn__bg{ background:linear-gradient(45deg, #833AB4 0%, #E1306C 50%, #FCB045 100%); }
+.dock-btn--wa .dock-btn__bg{ background:linear-gradient(145deg, #25D366 0%, #0E7A3D 100%); }
+.dock-btn__shine{ position:absolute; inset:0; border-radius:inherit; overflow:hidden; pointer-events:none; z-index:1; }
+.dock-btn__shine::before{
+  content:''; position:absolute; top:-60%; left:-60%; width:220%; height:220%;
+  background:linear-gradient(115deg, transparent 40%, rgba(255,255,255,.06) 46%, rgba(255,255,255,.32) 50%, rgba(255,255,255,.06) 54%, transparent 60%);
+  transform:translate(-100%, -100%); animation:premiumShine 6s cubic-bezier(.4, 0, .2, 1) infinite;
+}
+.dock-btn--fb .dock-btn__shine::before{ animation-delay:0s; }
+.dock-btn--ig .dock-btn__shine::before{ animation-delay:.9s; }
+.dock-btn--wa .dock-btn__shine::before{ animation-delay:1.8s; }
+@keyframes premiumShine{ 0%{ transform:translate(-100%, -100%); } 55%{ transform:translate(40%, 40%); } 100%{ transform:translate(100%, 100%); } }
+
+.dock-btn--social svg{ position:relative; z-index:2; transition: transform .55s cubic-bezier(.34, 1.56, .64, 1), color .35s var(--ease), filter .4s var(--ease); }
+.dock-btn--social:hover{ transform:translateY(-4px) scale(1.08); color:#fff; border-color:rgba(255,255,255,.22); }
+.dock-btn--social:hover .dock-btn__bg{ opacity:1; }
+.dock-btn--social:hover svg{ transform:scale(1.22) rotate(-8deg); color:#fff; filter:drop-shadow(0 2px 6px rgba(0,0,0,.35)); }
+.dock-btn--social:hover .dock-btn__shine::before{ animation-duration:1.6s; }
+.dock-btn--fb:hover{ box-shadow: 0 18px 38px -12px rgba(24,119,242,.65), 0 0 0 1px rgba(255,255,255,.16), inset 0 1px 0 rgba(255,255,255,.5), inset 0 -3px 10px rgba(0,0,0,.2); }
+.dock-btn--ig:hover{ box-shadow: 0 18px 38px -12px rgba(225,48,108,.6), 0 0 0 1px rgba(255,255,255,.16), inset 0 1px 0 rgba(255,255,255,.5), inset 0 -3px 10px rgba(0,0,0,.2); }
+.dock-btn--wa:hover{ box-shadow: 0 18px 38px -12px rgba(37,211,102,.65), 0 0 0 1px rgba(255,255,255,.16), inset 0 1px 0 rgba(255,255,255,.5), inset 0 -3px 10px rgba(0,0,0,.2); }
+
+.dock-btn__tip{ position:absolute; right:calc(100% + 12px); top:50%; transform:translateY(-50%) translateX(6px); padding:7px 13px; background:#16202F; border:1px solid rgba(255,255,255,.14); border-radius:9px; color:#E7EDF6; font-family:'Inter', sans-serif; font-size:.74rem; font-weight:600; letter-spacing:.01em; white-space:nowrap; opacity:0; pointer-events:none; box-shadow:0 12px 26px -10px #000; transition:opacity .28s var(--ease), transform .28s var(--ease); z-index:5; }
+.dock-btn__tip::after{ content:''; position:absolute; right:-5px; top:50%; margin-top:-4px; width:8px; height:8px; background:#16202F; border-right:1px solid rgba(255,255,255,.14); border-top:1px solid rgba(255,255,255,.14); transform:rotate(45deg); }
+.dock-btn:hover .dock-btn__tip, .dock-btn.show-tip .dock-btn__tip{ opacity:1; transform:translateY(-50%) translateX(0); }
+
+.dock-btn__badge{ position:absolute; top:-4px; right:-4px; min-width:22px; height:22px; padding:0 6px; border-radius:11px; background:linear-gradient(145deg, #FF5C4D, #E4483C); color:#fff; font-family:'Sora', sans-serif; font-size:11px; font-weight:800; line-height:1; display:grid; place-items:center; border:2px solid var(--bg); box-shadow:0 4px 12px -2px rgba(228,72,60,.7); transition:opacity .3s var(--ease), transform .3s var(--ease); z-index:2; }
+.dock-btn.seen .dock-btn__badge{ opacity:0; transform:scale(.4); }
+
+/* ===================== CHAT WINDOW ===================== */
+.chat-window{
+  position:fixed; right:clamp(14px, 2.5vw, 24px); bottom:clamp(14px, 2.5vw, 24px); z-index:92;
+  width:min(390px, calc(100vw - 32px));
+  height:min(600px, calc(100vh - 160px));
+  height:min(600px, calc(100dvh - 160px));
+  display:flex; flex-direction:column; border-radius:24px; overflow:hidden;
+  background:linear-gradient(170deg, #101828 0%, #0A0F18 100%);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 44px 90px -34px #000, 0 0 0 1px rgba(233,180,76,.07);
+  opacity:0; visibility:hidden; transform:translateY(18px) scale(.96); transform-origin:bottom right;
+  transition:opacity .3s var(--ease), transform .3s var(--ease), visibility .3s;
+}
+.chat-window.is-open{ opacity:1; visibility:visible; transform:none; }
+
+.chat-header{ display:flex; align-items:center; gap:12px; padding:13px 16px; flex-shrink:0; background:linear-gradient(120deg, rgba(233,180,76,.17), rgba(233,180,76,.03)); border-bottom:1px solid rgba(255,255,255,.1); }
+.chat-avatar{ position:relative; width:42px; height:42px; border-radius:14px; display:grid; place-items:center; background:linear-gradient(145deg, var(--gold-2), #C8901F); color:#0A1018; font-family:'Sora', sans-serif; font-weight:800; font-size:17px; letter-spacing:-.02em; flex-shrink:0; box-shadow:0 8px 20px -10px var(--gold-glow); }
+.chat-avatar__dot{ position:absolute; right:-2px; bottom:-2px; width:12px; height:12px; border-radius:50%; background:#34D07E; border:2.5px solid #0F1624; }
+.chat-header__text{ flex:1; min-width:0; }
+.chat-header__text strong{ display:block; font-family:'Sora', sans-serif; font-size:.95rem; font-weight:700; color:#F3F7FC; letter-spacing:-.01em; }
+.chat-header__text small{ display:flex; align-items:center; gap:6px; font-size:.72rem; color:#93A2B7; margin-top:2px; }
+.online-dot{ width:6px; height:6px; border-radius:50%; background:#34D07E; box-shadow:0 0 0 3px rgba(52,208,126,.16); flex-shrink:0; }
+.chat-close{ width:34px; height:34px; flex-shrink:0; border-radius:10px; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.05); color:#C4CEDD; display:grid; place-items:center; cursor:pointer; padding:0; transition:background .25s var(--ease), color .25s var(--ease), transform .25s var(--ease); }
+.chat-close:hover{ background:rgba(255,255,255,.13); color:#fff; transform:rotate(90deg); }
+.chat-close svg{ width:15px; height:15px; }
+
+.chat-body{ flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:16px 14px 6px; display:flex; flex-direction:column; gap:10px; scroll-behavior:smooth; }
+.chat-body::-webkit-scrollbar{ width:6px; }
+.chat-body::-webkit-scrollbar-track{ background:transparent; }
+.chat-body::-webkit-scrollbar-thumb{ background:rgba(255,255,255,.14); border-radius:3px; }
+
+.msg{ display:flex; }
+.msg--bot{ justify-content:flex-start; }
+.msg--user{ justify-content:flex-end; }
+.msg__bubble{ max-width:88%; padding:11px 14px; border-radius:16px; font-size:.875rem; line-height:1.62; white-space:pre-line; word-break:break-word; animation:msgIn .32s var(--ease) both; }
+@keyframes msgIn{ from{ opacity:0; transform:translateY(8px) scale(.97); } to{ opacity:1; transform:none; } }
+.msg--bot .msg__bubble{ background:rgba(255,255,255,.065); border:1px solid rgba(255,255,255,.09); color:#DCE5F1; border-bottom-left-radius:5px; }
+.msg--bot .msg__bubble strong{ color:#fff; font-weight:700; }
+.msg--user .msg__bubble{ background:linear-gradient(140deg, var(--gold-2), var(--gold)); color:#0A1018; font-weight:500; border-bottom-right-radius:5px; box-shadow:0 10px 24px -14px var(--gold-glow); }
+.msg--typing .msg__bubble{ display:flex; align-items:center; gap:4px; padding:15px 16px; }
+.msg--typing span{ width:6px; height:6px; border-radius:50%; background:#94A2B8; animation:typingDot 1.15s infinite; }
+.msg--typing span:nth-child(2){ animation-delay:.15s; }
+.msg--typing span:nth-child(3){ animation-delay:.3s; }
+@keyframes typingDot{ 0%,60%,100%{ transform:translateY(0); opacity:.35; } 30%{ transform:translateY(-4px); opacity:1; } }
+
+.chat-chips{ display:flex; flex-wrap:wrap; gap:7px; padding:0 14px 10px; flex-shrink:0; }
+.chat-chips:empty{ display:none; }
+.chat-chip{ padding:7px 13px; border-radius:999px; background:rgba(233,180,76,.1); border:1px solid rgba(233,180,76,.3); color:var(--gold-2); font-size:.765rem; font-weight:600; cursor:pointer; animation:msgIn .3s var(--ease) both; transition:background .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease), transform .2s var(--ease); }
+.chat-chip:hover{ background:rgba(233,180,76,.24); border-color:rgba(233,180,76,.62); color:#fff; transform:translateY(-1px); }
+
+.chat-form{ display:flex; align-items:center; gap:8px; padding:10px 12px; flex-shrink:0; border-top:1px solid rgba(255,255,255,.09); background:rgba(255,255,255,.02); }
+.chat-form input{ flex:1; min-width:0; padding:12px 16px; border-radius:999px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); color:#EDF2F9; font-family:inherit; font-size:.86rem; transition:border-color .25s var(--ease), background .25s var(--ease); }
+.chat-form input::placeholder{ color:#6B7A92; }
+.chat-form input:focus{ outline:none; border-color:rgba(233,180,76,.55); background:rgba(255,255,255,.08); }
+.chat-form button{ width:42px; height:42px; flex-shrink:0; border-radius:50%; border:none; display:grid; place-items:center; background:linear-gradient(145deg, var(--gold-2), var(--gold)); color:#0A1018; cursor:pointer; padding:0; transition:transform .25s var(--ease), box-shadow .25s var(--ease), opacity .25s var(--ease); }
+.chat-form button:hover{ transform:scale(1.06); box-shadow:0 10px 22px -10px var(--gold-glow); }
+.chat-form button svg{ width:18px; height:18px; }
+.chat-form button:disabled, .chat-form input:disabled{ opacity:.5; cursor:not-allowed; }
+.chat-foot{ padding:0 16px 11px; flex-shrink:0; font-size:.665rem; line-height:1.5; color:#61708A; text-align:center; }
+
+/* ===================== REVEAL ===================== */
+.reveal{ opacity:0; transform:translateY(26px); transition:opacity .85s var(--ease), transform .85s var(--ease); transition-delay:var(--d, 0ms); will-change:opacity, transform; }
+.reveal.in{ opacity:1; transform:none; }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 1080px){
+  .about__grid{ grid-template-columns:1fr; gap:44px; }
+  .contact__grid{ grid-template-columns:1fr; gap:44px; }
+  .footer__grid{ grid-template-columns:1fr 1fr; row-gap:40px; }
+  .banner{ grid-template-columns:1fr; }
+  .banner__actions{ flex-direction:row; flex-wrap:wrap; min-width:0; }
+  .banner__actions .btn{ flex:1 1 200px; }
+  .nav__links a{ padding:10px 10px; font-size:13.5px; }
+}
+
+@media (max-width: 900px){
+  :root{ --nav-h:70px; }
+  .nav__links{ display:none; }
+  .nav__actions .btn--primary{ display:none; }
+  .nav__actions .lang-toggle{ display:none; }
+  .nav__toggle{ display:grid; }
+  .nav{ gap:12px; }
+
+  .hero{ aspect-ratio:auto; display:block; height:auto; background:var(--bg); }
+  .hero__media{ position:relative; inset:auto; z-index:0; width:100%; aspect-ratio:16 / 9; }
+  .hero__media video{ width:100%; height:100%; object-fit:cover; }
+  .hero__media::after{ content:''; position:absolute; inset:auto 0 0 0; height:42%; background:linear-gradient(to top, var(--bg), transparent); pointer-events:none; }
+  .hero__overlay{ display:none; }
+  .hero__inner{ position:relative; z-index:1; padding-top:38px; padding-bottom:60px; }
+  .hero__content{ max-width:100%; }
+  .hero h1{ margin-top:18px; }
+  .hero__actions{ margin-top:26px; }
+  .hero__actions .btn{ flex:1 1 100%; }
+  .hero__actions .btn--chatbot{ justify-content:center; }
+  .hero__stats{ margin-top:32px; display:grid; grid-template-columns:1fr 1fr; gap:22px 28px; }
+  .marquee__track{ animation-duration:26s; }
+}
+
+@media (max-width: 640px){
+  .form-grid{ grid-template-columns:1fr; }
+  .panel__stats{ grid-template-columns:1fr 1fr; }
+  .footer__grid{ grid-template-columns:1fr; }
+  .stat__label{ font-size:11px; letter-spacing:.03em; }
+  .brand__text strong{ font-size:13.5px; }
+  .brand__mark{ width:40px; height:40px; border-radius:12px; }
+  .quote{ padding:24px; }
+  .banner{ padding:28px 22px; border-radius:22px; }
+}
+
+@media (max-width: 480px){
+  .float-dock{ right:12px; bottom:12px; gap:9px; }
+  .dock-btn--ia{ width:58px; height:58px; border-radius:18px; }
+  .dock-btn__label{ font-size:19px; }
+  .dock-btn--social{ width:46px; height:46px; border-radius:13px; }
+  .dock-btn svg{ width:20px; height:20px; }
+  .dock-btn__tip{ display:none; }
+  .chat-window{ right:12px; left:12px; width:auto; bottom:12px; height:min(78vh, 620px); height:min(78dvh, 620px); border-radius:20px; transform-origin:bottom center; }
+  .wa-cta{ padding:16px; gap:12px; }
+  .wa-cta__icon{ width:42px; height:42px; border-radius:12px; }
+  .wa-cta__icon svg{ width:22px; height:22px; }
+}
+
+@media (max-width: 380px){
+  .hero__stats{ grid-template-columns:1fr; }
+  .panel__stats{ grid-template-columns:1fr; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *, *::before, *::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+  .reveal{ opacity:1; transform:none; }
+  .dock-btn__shine::before{ display:none; }
+  .btn--chatbot::before, .wa-cta::before{ display:none; }
+}
+</style>
+</head>
+
+<body id="top">
+<a class="skip-link" href="#servicios" data-i18n="a11y.skip">Saltar al contenido</a>
+
+<!-- ==================== HEADER ==================== -->
+<header class="site-header" id="header">
+  <div class="container">
+    <nav class="nav" aria-label="Navegación principal">
+
+      <a class="brand" href="#top" aria-label="Latino Proud Dispatch — Inicio">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 7h11v10H2z"/><path d="M13 10h4l4 4v3h-8z"/>
+            <circle cx="6.5" cy="18.5" r="1.7"/><circle cx="17" cy="18.5" r="1.7"/>
+          </svg>
+        </span>
+        <span class="brand__text">
+          <strong>LATINO PROUD</strong>
+          <small>DISPATCH</small>
+        </span>
+      </a>
+
+      <ul class="nav__links">
+        <li><a href="#servicios" data-i18n="nav.services">Servicios</a></li>
+        <li><a href="#nosotros" data-i18n="nav.about">Nosotros</a></li>
+        <li><a href="#proceso" data-i18n="nav.process">Proceso</a></li>
+        <li><a href="#programas" data-i18n="nav.programs">Programas</a></li>
+        <li><a href="#testimonios" data-i18n="nav.testimonials">Testimonios</a></li>
+      </ul>
+
+      <div class="nav__actions">
+        <div class="lang-toggle" role="group" aria-label="Language / Idioma">
+          <button class="lang-btn is-active" type="button" data-lang="es" aria-label="Español" title="Español">
+            <svg viewBox="0 0 24 16" aria-hidden="true">
+              <rect width="24" height="16" fill="#c60b1e"/>
+              <rect y="4" width="24" height="8" fill="#ffc400"/>
+              <rect x="6" y="6.5" width="2" height="3" fill="#c60b1e" opacity=".85"/>
+            </svg>
+          </button>
+          <button class="lang-btn" type="button" data-lang="en" aria-label="English" title="English">
+            <svg viewBox="0 0 24 16" aria-hidden="true">
+              <rect width="24" height="16" fill="#fff"/>
+              <g fill="#b22234">
+                <rect width="24" height="1.23"/>
+                <rect y="2.46" width="24" height="1.23"/>
+                <rect y="4.92" width="24" height="1.23"/>
+                <rect y="7.38" width="24" height="1.23"/>
+                <rect y="9.84" width="24" height="1.23"/>
+                <rect y="12.3" width="24" height="1.23"/>
+                <rect y="14.76" width="24" height="1.23"/>
+              </g>
+              <rect width="10" height="8.6" fill="#3c3b6e"/>
+              <g fill="#fff">
+                <circle cx="2" cy="1.6" r=".42"/><circle cx="5" cy="1.6" r=".42"/><circle cx="8" cy="1.6" r=".42"/>
+                <circle cx="3.5" cy="3.4" r=".42"/><circle cx="6.5" cy="3.4" r=".42"/>
+                <circle cx="2" cy="5.2" r=".42"/><circle cx="5" cy="5.2" r=".42"/><circle cx="8" cy="5.2" r=".42"/>
+                <circle cx="3.5" cy="7" r=".42"/><circle cx="6.5" cy="7" r=".42"/>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <a class="btn btn--primary btn--sm" href="#contacto" data-i18n="nav.cta">Cotiza gratis</a>
+        <button class="nav__toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span>
+        </button>
+      </div>
+
+    </nav>
+  </div>
+</header>
+
+<!-- ==================== MENÚ MÓVIL ==================== -->
+<div class="mobile-menu" id="mobileMenu">
+  <a class="m-link" href="#servicios" data-i18n="nav.services">Servicios</a>
+  <a class="m-link" href="#nosotros" data-i18n="nav.about">Nosotros</a>
+  <a class="m-link" href="#proceso" data-i18n="nav.process">Proceso</a>
+  <a class="m-link" href="#programas" data-i18n="nav.programs">Programas</a>
+  <a class="m-link" href="#testimonios" data-i18n="nav.testimonials">Testimonios</a>
+  <a class="btn btn--primary" href="#contacto" data-i18n="nav.cta">Cotiza gratis</a>
+
+  <div class="mobile-menu__lang">
+    <span data-i18n="nav.langLabel">Idioma</span>
+    <div class="lang-toggle" role="group" aria-label="Language / Idioma">
+      <button class="lang-btn is-active" type="button" data-lang="es" aria-label="Español">
+        <svg viewBox="0 0 24 16" aria-hidden="true">
+          <rect width="24" height="16" fill="#c60b1e"/>
+          <rect y="4" width="24" height="8" fill="#ffc400"/>
+        </svg>
+      </button>
+      <button class="lang-btn" type="button" data-lang="en" aria-label="English">
+        <svg viewBox="0 0 24 16" aria-hidden="true">
+          <rect width="24" height="16" fill="#fff"/>
+          <g fill="#b22234">
+            <rect width="24" height="1.23"/><rect y="2.46" width="24" height="1.23"/><rect y="4.92" width="24" height="1.23"/>
+            <rect y="7.38" width="24" height="1.23"/><rect y="9.84" width="24" height="1.23"/><rect y="12.3" width="24" height="1.23"/><rect y="14.76" width="24" height="1.23"/>
+          </g>
+          <rect width="10" height="8.6" fill="#3c3b6e"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu__contact">
+    <span data-i18n="nav.contactLabel">Llámanos o escríbenos</span>
+    <a href="tel:+14806517912">+1 (480) 651-7912</a>
+    <a href="mailto:support@latinosprouddispatch.com">support@latinosprouddispatch.com</a>
+    <div class="socials">
+      <a href="https://www.facebook.com/profile.php?id=61563094175109" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/latinoprouddispatch2021/?hl=es" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://wa.me/14806517912" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.6 2 2.2 6.4 2.2 11.84c0 1.74.46 3.44 1.32 4.94L2 22l5.36-1.4a9.8 9.8 0 0 0 4.68 1.2h.01c5.43 0 9.84-4.4 9.84-9.84 0-2.63-1.02-5.1-2.88-6.96A9.78 9.78 0 0 0 12.04 2zm5.72 14.03c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.15-.2-1.18-1.57-1.18-3s.75-2.13 1.02-2.42c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.17.01.41-.07.64.49.24.57.8 1.98.87 2.12.07.15.12.32.02.51-.1.2-.15.32-.29.49-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.45.29.15.46.13.63-.08.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.68.79 1.97.94.29.15.48.22.55.34.07.13.07.75-.17 1.43z"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero" aria-label="Presentación">
+    <div class="hero__media">
+      <video src="https://i.imgur.com/PJ8Sruq.mp4" autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true" tabindex="-1"></video>
+    </div>
+    <div class="hero__overlay" aria-hidden="true"></div>
+
+    <div class="container hero__inner">
+      <div class="hero__content">
+
+        <span class="eyebrow"><span class="dot"></span> <span data-i18n="hero.badge">Despacho de carga · Estados Unidos</span></span>
+
+        <h1>
+          <span data-i18n="hero.title1">Tu camión, tu libertad.</span><br>
+          <span class="accent" data-i18n="hero.title2">Nosotros nos encargamos del resto.</span>
+        </h1>
+
+        <p class="hero__sub" data-i18n="hero.subtitle">
+          Despacho profesional para owner-operators y pequeñas flotas de la comunidad latina.
+          Cargas con brokers verificados, tarifas negociadas y un equipo bilingüe que responde de verdad.
+        </p>
+
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#contacto">
+            <span data-i18n="hero.cta1">Empieza hoy</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="#servicios" data-i18n="hero.cta2">Ver servicios</a>
+          <a class="btn btn--chatbot" href="#" data-open-chat>
+            <span class="pulse-dot" aria-hidden="true"></span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.2 9.2 0 0 1-3.8-.8L3 21l1.9-5.2A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"/>
+              <path d="M8.5 11.5h.01"/><path d="M12 11.5h.01"/><path d="M15.5 11.5h.01"/>
+            </svg>
+            <span data-i18n="hero.ctaChatbot">Chatea con nuestro chatbot inteligente</span>
+          </a>
+        </div>
+
+        <div class="hero__stats">
+          <div class="stat">
+            <div class="stat__num">+1,200</div>
+            <div class="stat__label" data-i18n="hero.stat1">Cargas despachadas</div>
+          </div>
+          <div class="stat">
+            <div class="stat__num">98<em>%</em></div>
+            <div class="stat__label" data-i18n="hero.stat2">Clientes satisfechos</div>
+          </div>
+          <div class="stat">
+            <div class="stat__num">24/7</div>
+            <div class="stat__label" data-i18n="hero.stat3">Soporte bilingüe</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MARQUEE ==================== -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span class="marquee__item" data-i18n="marquee.1">Brokers verificados</span>
+      <span class="marquee__item" data-i18n="marquee.2">MC · DOT · UCR · BOC-3</span>
+      <span class="marquee__item" data-i18n="marquee.3">Hotshot</span>
+      <span class="marquee__item" data-i18n="marquee.4">Negociación de tarifas</span>
+      <span class="marquee__item" data-i18n="marquee.5">Factoring</span>
+      <span class="marquee__item" data-i18n="marquee.6">Soporte en español</span>
+      <span class="marquee__item" data-i18n="marquee.1">Brokers verificados</span>
+      <span class="marquee__item" data-i18n="marquee.2">MC · DOT · UCR · BOC-3</span>
+      <span class="marquee__item" data-i18n="marquee.3">Hotshot</span>
+      <span class="marquee__item" data-i18n="marquee.4">Negociación de tarifas</span>
+      <span class="marquee__item" data-i18n="marquee.5">Factoring</span>
+      <span class="marquee__item" data-i18n="marquee.6">Soporte en español</span>
+    </div>
+  </div>
+
+  <!-- ==================== SERVICIOS ==================== -->
+  <section class="services section-pad" id="servicios">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <span class="section-tag" data-i18n="services.tag">Servicios principales</span>
+        <h2 data-i18n="services.title">Todo lo que tu operación necesita, en un solo lugar</h2>
+        <p data-i18n="services.desc">Nos encargamos de la logística, los documentos y las llamadas difíciles, para que tú solo te concentres en manejar y cobrar.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card reveal" style="--d:0ms">
+          <div class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 7h11v10H2z"/><path d="M13 10h4l4 4v3h-8z"/>
+              <circle cx="6.5" cy="18.5" r="1.7"/><circle cx="17" cy="18.5" r="1.7"/>
+            </svg>
+          </div>
+          <h3 data-i18n="services.card1.title">Despacho de camiones</h3>
+          <p data-i18n="services.card1.desc">Encontramos las mejores cargas, negociamos la tarifa por ti y coordinamos cada detalle logístico del viaje.</p>
+          <ul class="card__list">
+            <li data-i18n="services.card1.l1">Búsqueda con brokers verificados</li>
+            <li data-i18n="services.card1.l2">Negociación de tarifas</li>
+            <li data-i18n="services.card1.l3">Coordinación logística completa</li>
+          </ul>
+        </article>
+
+        <article class="card reveal" style="--d:90ms">
+          <div class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/>
+            </svg>
+          </div>
+          <h3 data-i18n="services.card2.title">Gestión de permisos</h3>
+          <p data-i18n="services.card2.desc">Tramitamos y administramos tus documentos para que tu autoridad esté siempre en regla y sin retrasos.</p>
+          <ul class="card__list">
+            <li data-i18n="services.card2.l1">Número MC y DOT</li>
+            <li data-i18n="services.card2.l2">UCR y BOC-3</li>
+            <li data-i18n="services.card2.l3">Renovaciones y seguimiento</li>
+          </ul>
+        </article>
+
+        <article class="card reveal" style="--d:180ms">
+          <div class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              <path d="M8 9h8"/><path d="M8 13h5"/>
+            </svg>
+          </div>
+          <h3 data-i18n="services.card3.title">Asesoría y soporte</h3>
+          <p data-i18n="services.card3.desc">Atención bilingüe en español e inglés, pensada para transportistas latinos que quieren crecer con confianza.</p>
+          <ul class="card__list">
+            <li data-i18n="services.card3.l1">Soporte humano, no bots</li>
+            <li data-i18n="services.card3.l2">Asesoría para nuevos operadores</li>
+            <li data-i18n="services.card3.l3">Disponible los 7 días</li>
+          </ul>
+        </article>
+
+        <article class="card reveal" style="--d:270ms">
+          <div class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12z"/></svg>
+          </div>
+          <h3 data-i18n="services.card4.title">MC Leasing / Programas</h3>
+          <p data-i18n="services.card4.desc">Opciones de apoyo para equipos específicos como Hotshot, con acompañamiento en cada etapa de tu operación.</p>
+          <ul class="card__list">
+            <li data-i18n="services.card4.l1">Programas para Hotshot</li>
+            <li data-i18n="services.card4.l2">MC Leasing disponible</li>
+            <li data-i18n="services.card4.l3">Planes según tu flota</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== NOSOTROS ==================== -->
+  <section class="about section-pad" id="nosotros">
+    <div class="container">
+      <div class="about__grid">
+
+        <div class="reveal">
+          <span class="section-tag" data-i18n="about.tag">Quiénes somos</span>
+          <h2 style="font-size:clamp(1.85rem,3.9vw,2.8rem);" data-i18n="about.title">Hechos para la comunidad latina que mueve a Estados Unidos</h2>
+          <p style="color:var(--muted); margin-top:18px; font-size:1.02rem; line-height:1.75;" data-i18n="about.desc">
+            En Latino Proud Dispatch entendemos el esfuerzo de empezar con un solo camión.
+            Por eso combinamos tecnología, experiencia en carga y un trato cercano —en tu idioma—
+            para que cada milla cuente.
+          </p>
+
+          <ul class="checklist">
+            <li>
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <div>
+                <strong data-i18n="about.li1.title">Brokers verificados, cero riesgos</strong>
+                <span data-i18n="about.li1.desc">Trabajamos solo con brokers con historial comprobado y buena calificación de crédito.</span>
+              </div>
+            </li>
+            <li>
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <div>
+                <strong data-i18n="about.li2.title">Bilingüe de verdad</strong>
+                <span data-i18n="about.li2.desc">Hablamos tu idioma. Sin malentendidos, sin letras chiquitas, sin llamadas que no entiendes.</span>
+              </div>
+            </li>
+            <li>
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <div>
+                <strong data-i18n="about.li3.title">Transparencia total</strong>
+                <span data-i18n="about.li3.desc">Tarifas claras, sin cargos escondidos y con reportes de cada carga despachada.</span>
+              </div>
+            </li>
+            <li>
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <div>
+                <strong data-i18n="about.li4.title">Enfocados en hacerte crecer</strong>
+                <span data-i18n="about.li4.desc">De owner-operator a pequeña flota: te acompañamos en cada paso del camino.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="panel reveal" style="--d:120ms">
+          <div class="panel__title" data-i18n="panel.title">Resultados que hablan</div>
+          <div class="panel__sub" data-i18n="panel.sub">Nuestra operación en números</div>
+          <div class="panel__stats">
+            <div class="pstat"><b>+1,200</b><small data-i18n="panel.s1">Cargas despachadas</small></div>
+            <div class="pstat"><b>+350</b><small data-i18n="panel.s2">Transportistas activos</small></div>
+            <div class="pstat"><b>48 h</b><small data-i18n="panel.s3">Promedio de activación</small></div>
+            <div class="pstat"><b>24/7</b><small data-i18n="panel.s4">Disponibilidad</small></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROCESO ==================== -->
+  <section class="process section-pad" id="proceso">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-tag" data-i18n="process.tag">Cómo trabajamos</span>
+        <h2 data-i18n="process.title">Cuatro pasos y tu camión está rodando</h2>
+        <p data-i18n="process.desc">Un proceso simple, rápido y sin trámites eternos. Te acompañamos desde el primer mensaje.</p>
+      </div>
+
+      <div class="steps">
+        <article class="step reveal" style="--d:0ms">
+          <h3 data-i18n="process.step1.title">Contacto y registro</h3>
+          <p data-i18n="process.step1.desc">Nos escribes por WhatsApp o el formulario. Revisamos tu situación y armamos tu perfil de operador.</p>
+        </article>
+        <article class="step reveal" style="--d:90ms">
+          <h3 data-i18n="process.step2.title">Documentos en orden</h3>
+          <p data-i18n="process.step2.desc">Verificamos y gestionamos MC, DOT, UCR y BOC-3. Si te falta algo, nosotros lo tramitamos.</p>
+        </article>
+        <article class="step reveal" style="--d:180ms">
+          <h3 data-i18n="process.step3.title">Búsqueda y negociación</h3>
+          <p data-i18n="process.step3.desc">Filtramos cargas rentables con brokers verificados y negociamos la mejor tarifa para tu ruta.</p>
+        </article>
+        <article class="step reveal" style="--d:270ms">
+          <h3 data-i18n="process.step4.title">Cargas y seguimiento</h3>
+          <p data-i18n="process.step4.desc">Coordinamos la logística, damos seguimiento al viaje y te apoyamos hasta el pago.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BANNER PROGRAMAS ==================== -->
+  <section class="section-pad" id="programas" style="padding-top:0;">
+    <div class="container">
+      <div class="banner reveal">
+        <div class="banner__content">
+          <span class="section-tag" data-i18n="banner.tag">MC Leasing · Hotshot</span>
+          <h2 data-i18n="banner.title">¿Tienes un Hotshot o buscas operar bajo un MC?</h2>
+          <p data-i18n="banner.desc">
+            Contamos con programas de apoyo diseñados para equipos específicos.
+            Te ayudamos con el leasing de MC, la documentación y el despacho continuo
+            para que tu operación arranque sin frenos.
+          </p>
+          <div class="banner__badges">
+            <span class="badge" data-i18n="banner.b1">Hotshot</span>
+            <span class="badge" data-i18n="banner.b2">MC Leasing</span>
+            <span class="badge" data-i18n="banner.b3">Pequeñas flotas</span>
+            <span class="badge" data-i18n="banner.b4">Owner-operators</span>
+          </div>
+        </div>
+        <div class="banner__actions">
+          <a class="btn btn--primary" href="#contacto">
+            <span data-i18n="banner.cta1">Solicitar información</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="#contacto" data-i18n="banner.cta2">Hablar con un asesor</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TESTIMONIOS ==================== -->
+  <section class="testimonials section-pad" id="testimonios">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <span class="section-tag" data-i18n="testi.tag">Testimonios</span>
+        <h2 data-i18n="testi.title">Transportistas que ya están creciendo con nosotros</h2>
+      </div>
+
+      <div class="quotes">
+        <article class="quote reveal" style="--d:0ms">
+          <div class="stars" aria-label="5 de 5 estrellas">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+          </div>
+          <p data-i18n="testi.1.text">“Empecé con un solo camión y no sabía ni por dónde empezar. Me ayudaron con el MC, el BOC-3 y desde la primera semana ya tenía cargas. Todo en español y sin vueltas.”</p>
+          <footer>
+            <span class="avatar" aria-hidden="true">JR</span>
+            <div>
+              <cite data-i18n="testi.1.name">José R.</cite>
+              <small data-i18n="testi.1.role">Owner-operator · Texas</small>
+            </div>
+          </footer>
+        </article>
+
+        <article class="quote reveal" style="--d:110ms">
+          <div class="stars" aria-label="5 de 5 estrellas">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+          </div>
+          <p data-i18n="testi.2.text">“Tengo una flota de tres camiones Hotshot. La diferencia está en la negociación: me subieron el promedio por milla y siempre contestan el teléfono.”</p>
+          <footer>
+            <span class="avatar" aria-hidden="true">MG</span>
+            <div>
+              <cite data-i18n="testi.2.name">María G.</cite>
+              <small data-i18n="testi.2.role">Pequeña flota · Florida</small>
+            </div>
+          </footer>
+        </article>
+
+        <article class="quote reveal" style="--d:220ms">
+          <div class="stars" aria-label="5 de 5 estrellas">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+          </div>
+          <p data-i18n="testi.3.text">“Lo que más valoro es la transparencia. Me explican todo antes de firmar y siempre sé cuánto voy a cobrar. Se siente como trabajar con familia.”</p>
+          <footer>
+            <span class="avatar" aria-hidden="true">CL</span>
+            <div>
+              <cite data-i18n="testi.3.name">Carlos L.</cite>
+              <small data-i18n="testi.3.role">Owner-operator · California</small>
+            </div>
+          </footer>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACTO ==================== -->
+  <section class="contact section-pad" id="contacto">
+    <div class="container">
+      <div class="contact__grid">
+
+        <div class="reveal">
+          <span class="section-tag" data-i18n="contact.tag">Contacto</span>
+          <h2 style="font-size:clamp(1.85rem,3.9vw,2.8rem);" data-i18n="contact.title">Hablemos de tu próxima carga</h2>
+          <p style="color:var(--muted); margin-top:18px; font-size:1rem; line-height:1.75; max-width:440px;" data-i18n="contact.desc">
+            Escríbenos y un asesor bilingüe te contacta el mismo día.
+            Sin compromiso, sin costo por cotización.
+          </p>
+
+          <!-- CTA WhatsApp -->
+          <a class="wa-cta" href="https://wa.me/14806517912" target="_blank" rel="noopener">
+            <span class="wa-cta__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.6 2 2.2 6.4 2.2 11.84c0 1.74.46 3.44 1.32 4.94L2 22l5.36-1.4a9.8 9.8 0 0 0 4.68 1.2h.01c5.43 0 9.84-4.4 9.84-9.84 0-2.63-1.02-5.1-2.88-6.96A9.78 9.78 0 0 0 12.04 2zm5.72 14.03c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.15-.2-1.18-1.57-1.18-3s.75-2.13 1.02-2.42c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.17.01.41-.07.64.49.24.57.8 1.98.87 2.12.07.15.12.32.02.51-.1.2-.15.32-.29.49-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.45.29.15.46.13.63-.08.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.68.79 1.97.94.29.15.48.22.55.34.07.13.07.75-.17 1.43z"/></svg>
+            </span>
+            <span class="wa-cta__body">
+              <strong data-i18n="contact.waTitle">Chatea con nosotros</strong>
+              <small data-i18n="contact.waSub">Respuesta inmediata por WhatsApp</small>
+            </span>
+            <span class="wa-cta__arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </span>
+          </a>
+
+          <div class="info-list">
+            <a class="info-item" href="tel:+14806517912">
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span>
+              <div>
+                <small data-i18n="contact.phoneLabel">Llámanos</small>
+                <strong>+1 (480) 651-7912</strong>
+              </div>
+            </a>
+
+            <a class="info-item" href="mailto:support@latinosprouddispatch.com">
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></span>
+              <div>
+                <small data-i18n="contact.emailLabel">Escríbenos</small>
+                <strong>support@latinosprouddispatch.com</strong>
+              </div>
+            </a>
+
+            <div class="info-item">
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+              <div>
+                <small data-i18n="contact.hoursLabel">Horario</small>
+                <strong data-i18n="contact.hoursValue">Lun – Dom · 24 horas</strong>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+              <div>
+                <small data-i18n="contact.coverageLabel">Cobertura</small>
+                <strong data-i18n="contact.coverageValue">Estados Unidos (48 estados)</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-socials">
+            <span class="contact-socials__label" data-i18n="contact.follow">Síguenos</span>
+            <div class="socials">
+              <a href="https://www.facebook.com/profile.php?id=61563094175109" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+              </a>
+              <a href="https://www.instagram.com/latinoprouddispatch2021/?hl=es" target="_blank" rel="noopener" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+              </a>
+              <a href="https://wa.me/14806517912" target="_blank" rel="noopener" aria-label="WhatsApp">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.6 2 2.2 6.4 2.2 11.84c0 1.74.46 3.44 1.32 4.94L2 22l5.36-1.4a9.8 9.8 0 0 0 4.68 1.2h.01c5.43 0 9.84-4.4 9.84-9.84 0-2.63-1.02-5.1-2.88-6.96A9.78 9.78 0 0 0 12.04 2zm5.72 14.03c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.15-.2-1.18-1.57-1.18-3s.75-2.13 1.02-2.42c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.17.01.41-.07.64.49.24.57.8 1.98.87 2.12.07.15.12.32.02.51-.1.2-.15.32-.29.49-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.45.29.15.46.13.63-.08.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.68.79 1.97.94.29.15.48.22.55.34.07.13.07.75-.17 1.43z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card reveal" style="--d:120ms">
+          <h3 data-i18n="form.title">Solicita tu cotización gratuita</h3>
+          <p data-i18n="form.desc">Completa el formulario y te contactamos hoy mismo.</p>
+
+          <form class="form-grid" id="contactForm" novalidate>
+            <div class="field">
+              <label for="nombre" data-i18n="form.nameLabel">Nombre completo</label>
+              <input type="text" id="nombre" name="nombre" placeholder="Juan Pérez" data-i18n-placeholder="form.namePlaceholder" required autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="telefono" data-i18n="form.phoneLabel">Teléfono</label>
+              <input type="tel" id="telefono" name="telefono" placeholder="+1 (480) 651-7912" data-i18n-placeholder="form.phonePlaceholder" required autocomplete="tel" />
+            </div>
+            <div class="field field--full">
+              <label for="email" data-i18n="form.emailLabel">Correo electrónico</label>
+              <input type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com" data-i18n-placeholder="form.emailPlaceholder" required autocomplete="email" />
+            </div>
+            <div class="field field--full">
+              <label for="servicio" data-i18n="form.serviceLabel">¿Qué servicio necesitas?</label>
+              <select id="servicio" name="servicio" required>
+                <option value="" disabled selected data-i18n="form.serviceOption">Selecciona una opción</option>
+                <option data-i18n="form.service1">Despacho de camiones</option>
+                <option data-i18n="form.service2">Gestión de permisos (MC, DOT, UCR, BOC-3)</option>
+                <option data-i18n="form.service3">Asesoría y soporte</option>
+                <option data-i18n="form.service4">MC Leasing / Programa Hotshot</option>
+                <option data-i18n="form.service5">Aún no estoy seguro</option>
+              </select>
+            </div>
+            <div class="field field--full">
+              <label for="mensaje" data-i18n="form.messageLabel">Cuéntanos de tu operación</label>
+              <textarea id="mensaje" name="mensaje" placeholder="Tipo de camión, ruta habitual, años de experiencia…" data-i18n-placeholder="form.messagePlaceholder"></textarea>
+            </div>
+            <button class="btn btn--primary" type="submit">
+              <span data-i18n="form.submit">Enviar solicitud</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </button>
+            <div class="form-success" id="formSuccess" role="status">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              <span data-i18n="form.success">¡Gracias! Abrimos WhatsApp para completar tu solicitud.</span>
+            </div>
+            <p class="form-note" data-i18n="form.note">Al enviar aceptas ser contactado por nuestro equipo. Tus datos están protegidos.</p>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="brand" href="#top" aria-label="Latino Proud Dispatch">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 7h11v10H2z"/><path d="M13 10h4l4 4v3h-8z"/>
+              <circle cx="6.5" cy="18.5" r="1.7"/><circle cx="17" cy="18.5" r="1.7"/>
+            </svg>
+          </span>
+          <span class="brand__text"><strong>LATINO PROUD</strong><small>DISPATCH</small></span>
+        </a>
+        <p data-i18n="footer.brand">Empresa de servicios de transporte y despacho de carga en Estados Unidos, enfocada en apoyar a owner-operators y pequeñas flotas de la comunidad latina.</p>
+        <div class="socials">
+          <a href="https://www.facebook.com/profile.php?id=61563094175109" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/latinoprouddispatch2021/?hl=es" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://wa.me/14806517912" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.6 2 2.2 6.4 2.2 11.84c0 1.74.46 3.44 1.32 4.94L2 22l5.36-1.4a9.8 9.8 0 0 0 4.68 1.2h.01c5.43 0 9.84-4.4 9.84-9.84 0-2.63-1.02-5.1-2.88-6.96A9.78 9.78 0 0 0 12.04 2zm5.72 14.03c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.15-.2-1.18-1.57-1.18-3s.75-2.13 1.02-2.42c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.17.01.41-.07.64.49.24.57.8 1.98.87 2.12.07.15.12.32.02.51-.1.2-.15.32-.29.49-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.45.29.15.46.13.63-.08.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.68.79 1.97.94.29.15.48.22.55.34.07.13.07.75-.17 1.43z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h4 data-i18n="footer.colServices">Servicios</h4>
+        <ul>
+          <li><a href="#servicios" data-i18n="services.card1.title">Despacho de camiones</a></li>
+          <li><a href="#servicios" data-i18n="services.card2.title">Gestión de permisos</a></li>
+          <li><a href="#servicios" data-i18n="services.card3.title">Asesoría y soporte</a></li>
+          <li><a href="#programas" data-i18n="banner.b2">MC Leasing</a></li>
+          <li><a href="#programas" data-i18n="footer.progHotshot">Programa Hotshot</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4 data-i18n="footer.colCompany">Empresa</h4>
+        <ul>
+          <li><a href="#nosotros" data-i18n="nav.about">Nosotros</a></li>
+          <li><a href="#proceso" data-i18n="footer.howWeWork">Cómo trabajamos</a></li>
+          <li><a href="#testimonios" data-i18n="nav.testimonials">Testimonios</a></li>
+          <li><a href="#contacto" data-i18n="footer.contactLink">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4 data-i18n="footer.colContact">Contacto</h4>
+        <ul>
+          <li><a href="tel:+14806517912">+1 (480) 651-7912</a></li>
+          <li><a href="mailto:support@latinosprouddispatch.com">support@latinosprouddispatch.com</a></li>
+          <li><a href="#contacto" data-i18n="footer.coverage">Cobertura: EE. UU.</a></li>
+          <li><a href="#contacto" data-i18n="footer.hours247">Atención 24/7</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© <span id="year">2025</span> Latino Proud Dispatch. <span data-i18n="footer.rights">Todos los derechos reservados.</span></span>
+      <span data-i18n="footer.tagline">Hecho con orgullo para la comunidad latina 🇺🇸</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== FLOATING DOCK ==================== -->
+<div class="float-dock" id="floatDock">
+  <button class="dock-btn dock-btn--ia" id="chatLauncher" type="button" aria-label="Abrir chat con Julián" aria-expanded="false" aria-controls="chatWindow">
+    <span class="dock-btn__label">IA</span>
+    <span class="dock-btn__badge" id="chatBadge">1</span>
+    <span class="dock-btn__tip" data-i18n="dock.tipIA">Habla con Julián 🤖</span>
+  </button>
+
+  <a class="dock-btn dock-btn--social dock-btn--fb" href="https://www.facebook.com/profile.php?id=61563094175109" target="_blank" rel="noopener" aria-label="Facebook">
+    <span class="dock-btn__bg" aria-hidden="true"></span>
+    <span class="dock-btn__shine" aria-hidden="true"></span>
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+    <span class="dock-btn__tip" data-i18n="dock.tipFB">Facebook</span>
+  </a>
+
+  <a class="dock-btn dock-btn--social dock-btn--ig" href="https://www.instagram.com/latinoprouddispatch2021/?hl=es" target="_blank" rel="noopener" aria-label="Instagram">
+    <span class="dock-btn__bg" aria-hidden="true"></span>
+    <span class="dock-btn__shine" aria-hidden="true"></span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+    </svg>
+    <span class="dock-btn__tip" data-i18n="dock.tipIG">Instagram</span>
+  </a>
+
+  <a class="dock-btn dock-btn--social dock-btn--wa" href="https://wa.me/14806517912" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <span class="dock-btn__bg" aria-hidden="true"></span>
+    <span class="dock-btn__shine" aria-hidden="true"></span>
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.6 2 2.2 6.4 2.2 11.84c0 1.74.46 3.44 1.32 4.94L2 22l5.36-1.4a9.8 9.8 0 0 0 4.68 1.2h.01c5.43 0 9.84-4.4 9.84-9.84 0-2.63-1.02-5.1-2.88-6.96A9.78 9.78 0 0 0 12.04 2zm5.72 14.03c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.17-4.94-4.36-.15-.2-1.18-1.57-1.18-3s.75-2.13 1.02-2.42c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.17.01.41-.07.64.49.24.57.8 1.98.87 2.12.07.15.12.32.02.51-.1.2-.15.32-.29.49-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.03 1.12 1 2.06 1.31 2.35 1.45.29.15.46.13.63-.08.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.68.79 1.97.94.29.15.48.22.55.34.07.13.07.75-.17 1.43z"/></svg>
+    <span class="dock-btn__tip" data-i18n="dock.tipWA">WhatsApp</span>
+  </a>
+</div>
+
+<!-- ==================== CHAT WINDOW ==================== -->
+<section class="chat-window" id="chatWindow" role="dialog" aria-modal="false" aria-label="Chat con Julián" aria-hidden="true">
+  <header class="chat-header">
+    <div class="chat-avatar" aria-hidden="true">J<span class="chat-avatar__dot"></span></div>
+    <div class="chat-header__text">
+      <strong>Julián</strong>
+      <small><span class="online-dot"></span> <span data-i18n="chat.status">Asistente virtual · En línea</span></small>
+    </div>
+    <button class="chat-close" id="chatClose" type="button" aria-label="Cerrar chat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </header>
+
+  <div class="chat-body" id="chatBody" role="log" aria-live="polite" aria-relevant="additions"></div>
+  <div class="chat-chips" id="chatChips"></div>
+
+  <form class="chat-form" id="chatForm" autocomplete="off">
+    <input type="text" id="chatInput" placeholder="Escribe tu pregunta…" data-i18n-placeholder="chat.placeholder" aria-label="Escribe tu mensaje" maxlength="400" />
+    <button type="submit" id="chatSend" aria-label="Enviar mensaje">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+    </button>
+  </form>
+
+  <p class="chat-foot" data-i18n="chat.foot">Julián es un asistente virtual. Para casos específicos te conectamos con un asesor humano.</p>
+</section>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+/* ============================================================
+   SISTEMA DE TRADUCCIÓN (ES / EN)
+   ============================================================ */
+(function(){
+  'use strict';
+
+  const I18N = {
+    es: {
+      'a11y.skip': 'Saltar al contenido',
+      'nav.services': 'Servicios',
+      'nav.about': 'Nosotros',
+      'nav.process': 'Proceso',
+      'nav.programs': 'Programas',
+      'nav.testimonials': 'Testimonios',
+      'nav.cta': 'Cotiza gratis',
+      'nav.langLabel': 'Idioma',
+      'nav.contactLabel': 'Llámanos o escríbenos',
+      'hero.badge': 'Despacho de carga · Estados Unidos',
+      'hero.title1': 'Tu camión, tu libertad.',
+      'hero.title2': 'Nosotros nos encargamos del resto.',
+      'hero.subtitle': 'Despacho profesional para owner-operators y pequeñas flotas de la comunidad latina. Cargas con brokers verificados, tarifas negociadas y un equipo bilingüe que responde de verdad.',
+      'hero.cta1': 'Empieza hoy',
+      'hero.cta2': 'Ver servicios',
+      'hero.ctaChatbot': 'Chatea con nuestro chatbot inteligente',
+      'hero.stat1': 'Cargas despachadas',
+      'hero.stat2': 'Clientes satisfechos',
+      'hero.stat3': 'Soporte bilingüe',
+      'marquee.1': 'Brokers verificados',
+      'marquee.2': 'MC · DOT · UCR · BOC-3',
+      'marquee.3': 'Hotshot',
+      'marquee.4': 'Negociación de tarifas',
+      'marquee.5': 'Factoring',
+      'marquee.6': 'Soporte en español',
+      'services.tag': 'Servicios principales',
+      'services.title': 'Todo lo que tu operación necesita, en un solo lugar',
+      'services.desc': 'Nos encargamos de la logística, los documentos y las llamadas difíciles, para que tú solo te concentres en manejar y cobrar.',
+      'services.card1.title': 'Despacho de camiones',
+      'services.card1.desc': 'Encontramos las mejores cargas, negociamos la tarifa por ti y coordinamos cada detalle logístico del viaje.',
+      'services.card1.l1': 'Búsqueda con brokers verificados',
+      'services.card1.l2': 'Negociación de tarifas',
+      'services.card1.l3': 'Coordinación logística completa',
+      'services.card2.title': 'Gestión de permisos',
+      'services.card2.desc': 'Tramitamos y administramos tus documentos para que tu autoridad esté siempre en regla y sin retrasos.',
+      'services.card2.l1': 'Número MC y DOT',
+      'services.card2.l2': 'UCR y BOC-3',
+      'services.card2.l3': 'Renovaciones y seguimiento',
+      'services.card3.title': 'Asesoría y soporte',
+      'services.card3.desc': 'Atención bilingüe en español e inglés, pensada para transportistas latinos que quieren crecer con confianza.',
+      'services.card3.l1': 'Soporte humano, no bots',
+      'services.card3.l2': 'Asesoría para nuevos operadores',
+      'services.card3.l3': 'Disponible los 7 días',
+      'services.card4.title': 'MC Leasing / Programas',
+      'services.card4.desc': 'Opciones de apoyo para equipos específicos como Hotshot, con acompañamiento en cada etapa de tu operación.',
+      'services.card4.l1': 'Programas para Hotshot',
+      'services.card4.l2': 'MC Leasing disponible',
+      'services.card4.l3': 'Planes según tu flota',
+      'about.tag': 'Quiénes somos',
+      'about.title': 'Hechos para la comunidad latina que mueve a Estados Unidos',
+      'about.desc': 'En Latino Proud Dispatch entendemos el esfuerzo de empezar con un solo camión. Por eso combinamos tecnología, experiencia en carga y un trato cercano —en tu idioma— para que cada milla cuente.',
+      'about.li1.title': 'Brokers verificados, cero riesgos',
+      'about.li1.desc': 'Trabajamos solo con brokers con historial comprobado y buena calificación de crédito.',
+      'about.li2.title': 'Bilingüe de verdad',
+      'about.li2.desc': 'Hablamos tu idioma. Sin malentendidos, sin letras chiquitas, sin llamadas que no entiendes.',
+      'about.li3.title': 'Transparencia total',
+      'about.li3.desc': 'Tarifas claras, sin cargos escondidos y con reportes de cada carga despachada.',
+      'about.li4.title': 'Enfocados en hacerte crecer',
+      'about.li4.desc': 'De owner-operator a pequeña flota: te acompañamos en cada paso del camino.',
+      'panel.title': 'Resultados que hablan',
+      'panel.sub': 'Nuestra operación en números',
+      'panel.s1': 'Cargas despachadas',
+      'panel.s2': 'Transportistas activos',
+      'panel.s3': 'Promedio de activación',
+      'panel.s4': 'Disponibilidad',
+      'process.tag': 'Cómo trabajamos',
+      'process.title': 'Cuatro pasos y tu camión está rodando',
+      'process.desc': 'Un proceso simple, rápido y sin trámites eternos. Te acompañamos desde el primer mensaje.',
+      'process.step1.title': 'Contacto y registro',
+      'process.step1.desc': 'Nos escribes por WhatsApp o el formulario. Revisamos tu situación y armamos tu perfil de operador.',
+      'process.step2.title': 'Documentos en orden',
+      'process.step2.desc': 'Verificamos y gestionamos MC, DOT, UCR y BOC-3. Si te falta algo, nosotros lo tramitamos.',
+      'process.step3.title': 'Búsqueda y negociación',
+      'process.step3.desc': 'Filtramos cargas rentables con brokers verificados y negociamos la mejor tarifa para tu ruta.',
+      'process.step4.title': 'Cargas y seguimiento',
+      'process.step4.desc': 'Coordinamos la logística, damos seguimiento al viaje y te apoyamos hasta el pago.',
+      'banner.tag': 'MC Leasing · Hotshot',
+      'banner.title': '¿Tienes un Hotshot o buscas operar bajo un MC?',
+      'banner.desc': 'Contamos con programas de apoyo diseñados para equipos específicos. Te ayudamos con el leasing de MC, la documentación y el despacho continuo para que tu operación arranque sin frenos.',
+      'banner.b1': 'Hotshot',
+      'banner.b2': 'MC Leasing',
+      'banner.b3': 'Pequeñas flotas',
+      'banner.b4': 'Owner-operators',
+      'banner.cta1': 'Solicitar información',
+      'banner.cta2': 'Hablar con un asesor',
+      'testi.tag': 'Testimonios',
+      'testi.title': 'Transportistas que ya están creciendo con nosotros',
+      'testi.1.text': '“Empecé con un solo camión y no sabía ni por dónde empezar. Me ayudaron con el MC, el BOC-3 y desde la primera semana ya tenía cargas. Todo en español y sin vueltas.”',
+      'testi.1.name': 'José R.',
+      'testi.1.role': 'Owner-operator · Texas',
+      'testi.2.text': '“Tengo una flota de tres camiones Hotshot. La diferencia está en la negociación: me subieron el promedio por milla y siempre contestan el teléfono.”',
+      'testi.2.name': 'María G.',
+      'testi.2.role': 'Pequeña flota · Florida',
+      'testi.3.text': '“Lo que más valoro es la transparencia. Me explican todo antes de firmar y siempre sé cuánto voy a cobrar. Se siente como trabajar con familia.”',
+      'testi.3.name': 'Carlos L.',
+      'testi.3.role': 'Owner-operator · California',
+      'contact.tag': 'Contacto',
+      'contact.title': 'Hablemos de tu próxima carga',
+      'contact.desc': 'Escríbenos y un asesor bilingüe te contacta el mismo día. Sin compromiso, sin costo por cotización.',
+      'contact.waTitle': 'Chatea con nosotros',
+      'contact.waSub': 'Respuesta inmediata por WhatsApp',
+      'contact.phoneLabel': 'Llámanos',
+      'contact.emailLabel': 'Escríbenos',
+      'contact.hoursLabel': 'Horario',
+      'contact.hoursValue': 'Lun – Dom · 24 horas',
+      'contact.coverageLabel': 'Cobertura',
+      'contact.coverageValue': 'Estados Unidos (48 estados)',
+      'contact.follow': 'Síguenos',
+      'form.title': 'Solicita tu cotización gratuita',
+      'form.desc': 'Completa el formulario y te contactamos hoy mismo.',
+      'form.nameLabel': 'Nombre completo',
+      'form.namePlaceholder': 'Juan Pérez',
+      'form.phoneLabel': 'Teléfono',
+      'form.phonePlaceholder': '+1 (480) 651-7912',
+      'form.emailLabel': 'Correo electrónico',
+      'form.emailPlaceholder': 'tucorreo@ejemplo.com',
+      'form.serviceLabel': '¿Qué servicio necesitas?',
+      'form.serviceOption': 'Selecciona una opción',
+      'form.service1': 'Despacho de camiones',
+      'form.service2': 'Gestión de permisos (MC, DOT, UCR, BOC-3)',
+      'form.service3': 'Asesoría y soporte',
+      'form.service4': 'MC Leasing / Programa Hotshot',
+      'form.service5': 'Aún no estoy seguro',
+      'form.messageLabel': 'Cuéntanos de tu operación',
+      'form.messagePlaceholder': 'Tipo de camión, ruta habitual, años de experiencia…',
+      'form.submit': 'Enviar solicitud',
+      'form.success': '¡Gracias! Abrimos WhatsApp para completar tu solicitud.',
+      'form.note': 'Al enviar aceptas ser contactado por nuestro equipo. Tus datos están protegidos.',
+      'footer.brand': 'Empresa de servicios de transporte y despacho de carga en Estados Unidos, enfocada en apoyar a owner-operators y pequeñas flotas de la comunidad latina.',
+      'footer.colServices': 'Servicios',
+      'footer.progHotshot': 'Programa Hotshot',
+      'footer.colCompany': 'Empresa',
+      'footer.howWeWork': 'Cómo trabajamos',
+      'footer.contactLink': 'Contacto',
+      'footer.colContact': 'Contacto',
+      'footer.coverage': 'Cobertura: EE. UU.',
+      'footer.hours247': 'Atención 24/7',
+      'footer.rights': 'Todos los derechos reservados.',
+      'footer.tagline': 'Hecho con orgullo para la comunidad latina 🇺🇸',
+      'dock.tipIA': 'Habla con Julián 🤖',
+      'dock.tipFB': 'Facebook',
+      'dock.tipIG': 'Instagram',
+      'dock.tipWA': 'WhatsApp',
+      'chat.status': 'Asistente virtual · En línea',
+      'chat.placeholder': 'Escribe tu pregunta…',
+      'chat.foot': 'Julián es un asistente virtual. Para casos específicos te conectamos con un asesor humano.'
+    },
+    en: {
+      'a11y.skip': 'Skip to content',
+      'nav.services': 'Services',
+      'nav.about': 'About',
+      'nav.process': 'Process',
+      'nav.programs': 'Programs',
+      'nav.testimonials': 'Testimonials',
+      'nav.cta': 'Get a free quote',
+      'nav.langLabel': 'Language',
+      'nav.contactLabel': 'Call or write to us',
+      'hero.badge': 'Freight dispatch · United States',
+      'hero.title1': 'Your truck, your freedom.',
+      'hero.title2': 'We take care of the rest.',
+      'hero.subtitle': 'Professional dispatch for owner-operators and small fleets in the Latino community. Verified broker loads, negotiated rates, and a bilingual team that truly responds.',
+      'hero.cta1': 'Start today',
+      'hero.cta2': 'View services',
+      'hero.ctaChatbot': 'Chat with our intelligent chatbot',
+      'hero.stat1': 'Loads dispatched',
+      'hero.stat2': 'Satisfied clients',
+      'hero.stat3': 'Bilingual support',
+      'marquee.1': 'Verified brokers',
+      'marquee.2': 'MC · DOT · UCR · BOC-3',
+      'marquee.3': 'Hotshot',
+      'marquee.4': 'Rate negotiation',
+      'marquee.5': 'Factoring',
+      'marquee.6': 'Spanish support',
+      'services.tag': 'Main services',
+      'services.title': 'Everything your operation needs, in one place',
+      'services.desc': 'We handle logistics, paperwork and the tough calls, so you can focus on driving and getting paid.',
+      'services.card1.title': 'Truck dispatch',
+      'services.card1.desc': 'We find the best loads, negotiate rates for you, and coordinate every logistical detail of the trip.',
+      'services.card1.l1': 'Search with verified brokers',
+      'services.card1.l2': 'Rate negotiation',
+      'services.card1.l3': 'Full logistics coordination',
+      'services.card2.title': 'Permit management',
+      'services.card2.desc': 'We process and manage your documents so your authority stays compliant without delays.',
+      'services.card2.l1': 'MC and DOT numbers',
+      'services.card2.l2': 'UCR and BOC-3',
+      'services.card2.l3': 'Renewals and follow-up',
+      'services.card3.title': 'Advisory & support',
+      'services.card3.desc': 'Bilingual support in Spanish and English, built for Latino carriers who want to grow with confidence.',
+      'services.card3.l1': 'Human support, not bots',
+      'services.card3.l2': 'Guidance for new operators',
+      'services.card3.l3': 'Available 7 days a week',
+      'services.card4.title': 'MC Leasing / Programs',
+      'services.card4.desc': 'Support options for specific equipment like Hotshot, with guidance at every stage of your operation.',
+      'services.card4.l1': 'Hotshot programs',
+      'services.card4.l2': 'MC Leasing available',
+      'services.card4.l3': 'Plans for your fleet',
+      'about.tag': 'Who we are',
+      'about.title': 'Built for the Latino community that moves America',
+      'about.desc': 'At Latino Proud Dispatch we understand the effort of starting with a single truck. That is why we combine technology, freight expertise and close human attention —in your language— so every mile counts.',
+      'about.li1.title': 'Verified brokers, zero risk',
+      'about.li1.desc': 'We only work with brokers that have a proven track record and solid credit rating.',
+      'about.li2.title': 'Truly bilingual',
+      'about.li2.desc': 'We speak your language. No misunderstandings, no fine print, no calls you do not understand.',
+      'about.li3.title': 'Full transparency',
+      'about.li3.desc': 'Clear rates, no hidden fees, and a report for every dispatched load.',
+      'about.li4.title': 'Focused on your growth',
+      'about.li4.desc': 'From owner-operator to small fleet: we walk with you every step of the way.',
+      'panel.title': 'Results that speak',
+      'panel.sub': 'Our operation in numbers',
+      'panel.s1': 'Loads dispatched',
+      'panel.s2': 'Active carriers',
+      'panel.s3': 'Average onboarding',
+      'panel.s4': 'Availability',
+      'process.tag': 'How we work',
+      'process.title': 'Four steps and your truck is rolling',
+      'process.desc': 'A simple, fast process with no endless paperwork. We walk with you from the first message.',
+      'process.step1.title': 'Contact and registration',
+      'process.step1.desc': 'You message us on WhatsApp or via the form. We review your situation and set up your operator profile.',
+      'process.step2.title': 'Documents in order',
+      'process.step2.desc': 'We verify and manage MC, DOT, UCR and BOC-3. If something is missing, we handle it.',
+      'process.step3.title': 'Search and negotiation',
+      'process.step3.desc': 'We filter profitable loads with verified brokers and negotiate the best rate for your route.',
+      'process.step4.title': 'Loads and follow-up',
+      'process.step4.desc': 'We coordinate logistics, track the trip, and support you all the way to payment.',
+      'banner.tag': 'MC Leasing · Hotshot',
+      'banner.title': 'Have a Hotshot or looking to operate under an MC?',
+      'banner.desc': 'We have support programs designed for specific equipment. We help with MC leasing, paperwork and continuous dispatch so your operation starts without brakes.',
+      'banner.b1': 'Hotshot',
+      'banner.b2': 'MC Leasing',
+      'banner.b3': 'Small fleets',
+      'banner.b4': 'Owner-operators',
+      'banner.cta1': 'Request information',
+      'banner.cta2': 'Talk to an advisor',
+      'testi.tag': 'Testimonials',
+      'testi.title': 'Carriers already growing with us',
+      'testi.1.text': '“I started with one truck and had no idea where to begin. They helped me with the MC, BOC-3, and by the first week I already had loads. All in Spanish and no runaround.”',
+      'testi.1.name': 'José R.',
+      'testi.1.role': 'Owner-operator · Texas',
+      'testi.2.text': '“I run a three-truck Hotshot fleet. The difference is in the negotiation: they raised my average per mile and they always answer the phone.”',
+      'testi.2.name': 'María G.',
+      'testi.2.role': 'Small fleet · Florida',
+      'testi.3.text': '“What I value most is transparency. They explain everything before signing and I always know what I will get paid. It feels like working with family.”',
+      'testi.3.name': 'Carlos L.',
+      'testi.3.role': 'Owner-operator · California',
+      'contact.tag': 'Contact',
+      'contact.title': 'Let’s talk about your next load',
+      'contact.desc': 'Write to us and a bilingual advisor will contact you the same day. No commitment, no quote cost.',
+      'contact.waTitle': 'Chat with us',
+      'contact.waSub': 'Instant reply on WhatsApp',
+      'contact.phoneLabel': 'Call us',
+      'contact.emailLabel': 'Email us',
+      'contact.hoursLabel': 'Hours',
+      'contact.hoursValue': 'Mon – Sun · 24 hours',
+      'contact.coverageLabel': 'Coverage',
+      'contact.coverageValue': 'United States (48 states)',
+      'contact.follow': 'Follow us',
+      'form.title': 'Request your free quote',
+      'form.desc': 'Fill out the form and we will contact you today.',
+      'form.nameLabel': 'Full name',
+      'form.namePlaceholder': 'John Smith',
+      'form.phoneLabel': 'Phone',
+      'form.phonePlaceholder': '+1 (480) 651-7912',
+      'form.emailLabel': 'Email address',
+      'form.emailPlaceholder': 'you@example.com',
+      'form.serviceLabel': 'Which service do you need?',
+      'form.serviceOption': 'Select an option',
+      'form.service1': 'Truck dispatch',
+      'form.service2': 'Permit management (MC, DOT, UCR, BOC-3)',
+      'form.service3': 'Advisory & support',
+      'form.service4': 'MC Leasing / Hotshot Program',
+      'form.service5': 'Not sure yet',
+      'form.messageLabel': 'Tell us about your operation',
+      'form.messagePlaceholder': 'Truck type, usual route, years of experience…',
+      'form.submit': 'Send request',
+      'form.success': 'Thank you! We are opening WhatsApp to complete your request.',
+      'form.note': 'By submitting you agree to be contacted by our team. Your data is protected.',
+      'footer.brand': 'Trucking and freight dispatch services company in the United States, focused on supporting owner-operators and small fleets in the Latino community.',
+      'footer.colServices': 'Services',
+      'footer.progHotshot': 'Hotshot Program',
+      'footer.colCompany': 'Company',
+      'footer.howWeWork': 'How we work',
+      'footer.contactLink': 'Contact',
+      'footer.colContact': 'Contact',
+      'footer.coverage': 'Coverage: USA',
+      'footer.hours247': '24/7 support',
+      'footer.rights': 'All rights reserved.',
+      'footer.tagline': 'Proudly made for the Latino community 🇺🇸',
+      'dock.tipIA': 'Talk to Julián 🤖',
+      'dock.tipFB': 'Facebook',
+      'dock.tipIG': 'Instagram',
+      'dock.tipWA': 'WhatsApp',
+      'chat.status': 'Virtual assistant · Online',
+      'chat.placeholder': 'Type your question…',
+      'chat.foot': 'Julián is a virtual assistant. For specific cases we connect you with a human advisor.'
+    }
+  };
+
+  const KEY = 'lpd-lang';
+  let currentLang = localStorage.getItem(KEY) === 'en' ? 'en' : 'es';
+
+  function applyLang(lang){
+    currentLang = lang;
+    const dict = I18N[lang] || I18N.es;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (dict[key]) el.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.dataset.i18nPlaceholder;
+      if (dict[key]) el.placeholder = dict[key];
+    });
+
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.classList.toggle('is-active', b.dataset.lang === lang);
+    });
+    localStorage.setItem(KEY, lang);
+
+    // Notificar al chatbot
+    window.dispatchEvent(new CustomEvent('lpd:langchange', { detail: { lang } }));
+  }
+
+  // Wiring de los botones de idioma
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.lang-btn');
+    if (btn && btn.dataset.lang) {
+      applyLang(btn.dataset.lang);
+    }
+  });
+
+  window.LPD_I18N = { applyLang, getLang: () => currentLang, dict: I18N };
+
+  // Aplicar al cargar
+  if (currentLang === 'en') applyLang('en');
+})();
+</script>
+
+<script>
+/* ============================================================
+   UI GENERAL: header, menú móvil, reveal, form, video
+   ============================================================ */
+(function () {
+  'use strict';
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  var header = document.getElementById('header');
+  var onScroll = function () { header.classList.toggle('is-scrolled', window.scrollY > 24); };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  var toggle = document.getElementById('menuToggle');
+  var menu = document.getElementById('mobileMenu');
+  function closeMenu(){
+    document.body.classList.remove('menu-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Abrir menú');
+    document.body.style.overflow = '';
+  }
+  function openMenu(){
+    document.body.classList.add('menu-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Cerrar menú');
+    document.body.style.overflow = 'hidden';
+  }
+  toggle.addEventListener('click', function(){
+    document.body.classList.contains('menu-open') ? closeMenu() : openMenu();
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+  window.addEventListener('resize', () => { if (window.innerWidth > 900) closeMenu(); });
+
+  // Reveal
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in'));
+  }
+
+  var WHATSAPP_NUMBER = '14806517912';
+  var form = document.getElementById('contactForm');
+  var success = document.getElementById('formSuccess');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    var data = new FormData(form);
+    var texto =
+      '¡Hola Latino Proud Dispatch! Quiero una cotización.%0A%0A' +
+      '*Nombre:* ' + encodeURIComponent(data.get('nombre')) + '%0A' +
+      '*Teléfono:* ' + encodeURIComponent(data.get('telefono')) + '%0A' +
+      '*Email:* ' + encodeURIComponent(data.get('email')) + '%0A' +
+      '*Servicio:* ' + encodeURIComponent(data.get('servicio')) + '%0A' +
+      '*Mensaje:* ' + encodeURIComponent(data.get('mensaje') || '—');
+    success.classList.add('show');
+    window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + texto, '_blank', 'noopener');
+    form.reset();
+    setTimeout(() => success.classList.remove('show'), 6000);
+  });
+
+  var video = document.querySelector('.hero__media video');
+  if (video) {
+    video.play().catch(() => {});
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) video.pause();
+      else video.play().catch(() => {});
+    });
+    video.addEventListener('error', () => {
+      var media = document.querySelector('.hero__media');
+      if (media) media.style.background = 'radial-gradient(120% 90% at 20% 20%, #16243A 0%, #080C14 70%)';
+    });
+  }
+})();
+</script>
+
+<script>
+/* ============================================================
+   CHATBOT JULIÁN — bilingüe
+   ============================================================ */
+(function () {
+  'use strict';
+
+  function getLang(){ return (window.LPD_I18N && window.LPD_I18N.getLang()) || 'es'; }
+
+  var GREETING = {
+    es: '¡Hola! 👋 Soy **Julián**, el asistente virtual de Latino Proud Dispatch.\n\nPuedo contarte sobre nuestros servicios, permisos (MC, DOT, UCR, BOC-3), precios, horarios y cómo empezar.\n\n¿Qué te gustaría saber?',
+    en: 'Hi! 👋 I’m **Julián**, the virtual assistant at Latino Proud Dispatch.\n\nI can tell you about our services, permits (MC, DOT, UCR, BOC-3), pricing, hours and how to get started.\n\nWhat would you like to know?'
+  };
+  var DEFAULT_CHIPS = {
+    es: ['Servicios', 'Precios', 'Cómo empezar', 'Permisos', 'Horario'],
+    en: ['Services', 'Pricing', 'How to start', 'Permits', 'Hours']
+  };
+
+  var KB = [
+    {
+      id: 'saludo',
+      patterns: ['hola','holi','buenas','buenos dias','buenas tardes','buenas noches','hey','que tal','saludos','hi','hello','good morning','good afternoon','good evening','howdy','greetings'],
+      reply: {
+        es: '¡Hola! 👋 Soy **Julián**, el asistente virtual de Latino Proud Dispatch.\n\nPuedo contarte sobre nuestros servicios, permisos, precios, horarios y cómo empezar.\n\n¿Qué te gustaría saber?',
+        en: 'Hi! 👋 I’m **Julián**, the virtual assistant at Latino Proud Dispatch.\n\nI can tell you about our services, permits, pricing, hours and how to get started.\n\nWhat would you like to know?'
+      },
+      chips: { es: ['Servicios','Precios','Cómo empezar','Permisos'], en: ['Services','Pricing','How to start','Permits'] }
+    },
+    {
+      id: 'despacho',
+      patterns: ['despacho','despachar','carga','cargas','broker','brokers','buscar carga','negociacion','tarifa','tarifas','logistica','camion','trailer','flete','ruta','dispatch','load','loads','find load','negotiate','rate','rates','logistics','truck','freight','route','routes'],
+      reply: {
+        es: '🚛 **Despacho de camiones**\n\nNos encargamos de:\n• Buscar cargas con **brokers verificados**.\n• Negociar la tarifa por ti.\n• Coordinar toda la logística del viaje.\n\nTú te concentras en manejar; nosotros en que cada milla sea rentable.\n\n¿Quieres que un asesor te contacte?',
+        en: '🚛 **Truck dispatch**\n\nWe handle:\n• Finding loads with **verified brokers**.\n• Negotiating the rate for you.\n• Coordinating all trip logistics.\n\nYou focus on driving; we focus on making every mile profitable.\n\nWould you like an advisor to contact you?'
+      },
+      chips: { es: ['Precios','Cómo empezar','Cobertura','Hablar con un asesor'], en: ['Pricing','How to start','Coverage','Talk to an advisor'] }
+    },
+    {
+      id: 'permisos',
+      patterns: ['permiso','permisos','mc','dot','ucr','boc','boc3','documento','documentos','autoridad','tramite','tramitar','renovacion','renovar','permit','permits','document','documents','authority','renew','renewal','registration'],
+      reply: {
+        es: '📄 **Gestión de permisos**\n\nTe ayudamos a tramitar y administrar:\n• **MC** (Motor Carrier)\n• **DOT** (Department of Transportation)\n• **UCR** (Unified Carrier Registration)\n• **BOC-3**\n\nTambién damos seguimiento a renovaciones para que tu autoridad nunca esté fuera de regla.\n\n¿Ya tienes tu MC o estás empezando?',
+        en: '📄 **Permit management**\n\nWe help you process and manage:\n• **MC** (Motor Carrier)\n• **DOT** (Department of Transportation)\n• **UCR** (Unified Carrier Registration)\n• **BOC-3**\n\nWe also follow up on renewals so your authority is never out of compliance.\n\nDo you already have your MC or are you just starting?'
+      },
+      chips: { es: ['Cómo empezar','Precios','Hablar con un asesor'], en: ['How to start','Pricing','Talk to an advisor'] }
+    },
+    {
+      id: 'asesoria',
+      patterns: ['asesoria','soporte','ayuda','bilingue','espanol','ingles','atencion al cliente','hablar con alguien','asesor','humano','persona real','advisory','support','help','bilingual','spanish','english','customer service','talk to someone','advisor','human','real person','help me'],
+      reply: {
+        es: '💬 **Asesoría y soporte bilingüe**\n\nAtendemos en **español e inglés**, con personas reales (bueno… yo soy la excepción 😄).\n\nTe apoyamos con dudas de operación, documentación y crecimiento de tu flota.\n\n¿Prefieres que te contacte un asesor por WhatsApp?',
+        en: '💬 **Bilingual support**\n\nWe serve you in **Spanish and English**, with real people (well… I’m the exception 😄).\n\nWe support you with operations, paperwork and growing your fleet.\n\nWould you like an advisor to contact you on WhatsApp?'
+      },
+      chips: { es: ['Contacto','Horario','Servicios'], en: ['Contact','Hours','Services'] }
+    },
+    {
+      id: 'programas',
+      patterns: ['hotshot','leasing','mc leasing','programa','programas','flota','flotas','owner operator','propietario','equipo','equipos','program','programs','fleet','fleets','owner','owners','equipment','pickup','mini fleet'],
+      reply: {
+        es: '⚡ **MC Leasing / Programas**\n\nTenemos opciones de apoyo para:\n• Equipos **Hotshot**\n• **MC Leasing** para operar bajo una autoridad existente\n• Pequeñas flotas y owner-operators\n\nTe acompañamos con la documentación y el despacho continuo.\n\n¿Quieres que te enviemos la información del programa?',
+        en: '⚡ **MC Leasing / Programs**\n\nWe have support options for:\n• **Hotshot** equipment\n• **MC Leasing** to operate under an existing authority\n• Small fleets and owner-operators\n\nWe support you with paperwork and continuous dispatch.\n\nWould you like us to send you the program info?'
+      },
+      chips: { es: ['Cómo empezar','Precios','Hablar con un asesor'], en: ['How to start','Pricing','Talk to an advisor'] }
+    },
+    {
+      id: 'precios',
+      patterns: ['precio','precios','costo','costos','cuanto cuesta','cuanto cobran','comision','porcentaje','cobran','gratis','cotizacion','presupuesto','price','prices','cost','costs','how much','commission','percentage','charge','free','quote','quotation','budget'],
+      reply: {
+        es: '💵 **Precios y cotización**\n\nLa **cotización es gratis y sin compromiso**.\n\nEl costo del despacho se maneja como un **porcentaje por carga**; el detalle exacto depende de tu tipo de camión, rutas y volumen de operación.\n\nUn asesor te da el número exacto, sin letras chiquitas.\n\n¿Te contactamos?',
+        en: '💵 **Pricing and quotes**\n\nThe **quote is free and with no commitment**.\n\nDispatch cost is a **percentage per load**; the exact number depends on your truck type, routes and volume.\n\nAn advisor gives you the exact number, no fine print.\n\nShall we contact you?'
+      },
+      chips: { es: ['Cómo empezar','Servicios','Contacto'], en: ['How to start','Services','Contact'] }
+    },
+    {
+      id: 'empezar',
+      patterns: ['empezar','empiezo','comenzar','registrar','registro','requisito','requisitos','que necesito','contratar','unirme','solicitar','pasos','proceso','activar','contrato','start','begin','register','registration','requirement','requirements','what do i need','hire','join','apply','steps','process','activate','contract'],
+      reply: {
+        es: '🚀 **Cómo empezar** (4 pasos)\n\n1. Nos contactas por el formulario o WhatsApp.\n2. Verificamos y gestionamos tus documentos (MC, DOT, UCR, BOC-3).\n3. Buscamos cargas rentables y negociamos la tarifa.\n4. Coordinamos la logística y damos seguimiento hasta el pago.\n\nEl promedio de activación es de **48 horas**.\n\n¿Quieres llenar la solicitud ahora?',
+        en: '🚀 **How to start** (4 steps)\n\n1. Contact us via the form or WhatsApp.\n2. We verify and manage your documents (MC, DOT, UCR, BOC-3).\n3. We find profitable loads and negotiate the rate.\n4. We coordinate logistics and follow up to payment.\n\nAverage onboarding is **48 hours**.\n\nWould you like to fill out the request now?'
+      },
+      chips: { es: ['Permisos','Precios','Contacto'], en: ['Permits','Pricing','Contact'] }
+    },
+    {
+      id: 'horario',
+      patterns: ['horario','horarios','hora','horas','abierto','abren','atienden','disponible','disponibilidad','24','domingo','sabado','schedule','hour','hours','open','opens','available','availability','sunday','weekend','saturday','when do you open'],
+      reply: {
+        es: '🕐 **Horario**\n\nEstamos disponibles **24/7**, los 7 días de la semana.\n\nPorque el camino no descansa… y tu despacho tampoco. 😄\n\n¿Te comunicamos con un asesor?',
+        en: '🕐 **Hours**\n\nWe are available **24/7**, 7 days a week.\n\nThe road does not rest… and neither does your dispatch. 😄\n\nShall we connect you with an advisor?'
+      },
+      chips: { es: ['Contacto','Servicios'], en: ['Contact','Services'] }
+    },
+    {
+      id: 'cobertura',
+      patterns: ['cobertura','cubren','estado','estados','donde','ubicacion','pais','zona','area','ciudad','coverage','cover','state','states','where','location','located','country','zone','area','city'],
+      reply: {
+        es: '🗺️ **Cobertura**\n\nOperamos en **Estados Unidos (48 estados continentales)**.\n\nSi tu ruta cruza el país, nosotros encontramos la carga.\n\n¿Tienes una ruta habitual?',
+        en: '🗺️ **Coverage**\n\nWe operate in the **United States (48 continental states)**.\n\nIf your route crosses the country, we find the load.\n\nDo you have a usual route?'
+      },
+      chips: { es: ['Servicios','Cómo empezar'], en: ['Services','How to start'] }
+    },
+    {
+      id: 'contacto',
+      patterns: ['contacto','telefono','llamar','numero','email','correo','whatsapp','escribir','comunicarme','redes','facebook','instagram','contact','phone','call','number','write','communicate','social','where do i find'],
+      reply: {
+        es: '📞 **Contacto**\n\n• Teléfono: **+1 (480) 651-7912**\n• Email: **support@latinosprouddispatch.com**\n• WhatsApp: botón verde en la esquina inferior derecha\n• Facebook e Instagram: íconos de la esquina inferior derecha\n• Formulario: sección «Contacto» de esta página\n\n¿Quieres que te contactemos nosotros?',
+        en: '📞 **Contact**\n\n• Phone: **+1 (480) 651-7912**\n• Email: **support@latinosprouddispatch.com**\n• WhatsApp: green button at the bottom right corner\n• Facebook and Instagram: icons at the bottom right corner\n• Form: “Contact” section of this page\n\nWould you like us to contact you?'
+      },
+      chips: { es: ['Cómo empezar','Horario','Precios'], en: ['How to start','Hours','Pricing'] }
+    },
+    {
+      id: 'nosotros',
+      patterns: ['empresa','quienes son','sobre ustedes','latino proud','historia','comunidad','latina','confianza','verificado','seguro','legitimo','experiencia','company','who are you','about you','history','community','trust','verified','secure','legit','experience'],
+      reply: {
+        es: '🇺🇸 **Quiénes somos**\n\nLatino Proud Dispatch es una empresa de servicios de transporte y despacho de carga en EE. UU., enfocada en **owner-operators y pequeñas flotas de la comunidad latina**.\n\n• Solo trabajamos con brokers verificados.\n• Atención bilingüe real.\n• Tarifas claras, sin cargos escondidos.\n\n+1,200 cargas despachadas y +350 transportistas activos.\n\n¿Quieres saber más de algún servicio?',
+        en: '🇺🇸 **Who we are**\n\nLatino Proud Dispatch is a trucking and freight dispatch services company in the US, focused on **owner-operators and small fleets in the Latino community**.\n\n• We only work with verified brokers.\n• Truly bilingual support.\n• Clear rates, no hidden fees.\n\n1,200+ loads dispatched and 350+ active carriers.\n\nWant to know more about a service?'
+      },
+      chips: { es: ['Servicios','Testimonios','Contacto'], en: ['Services','Testimonials','Contact'] }
+    },
+    {
+      id: 'pagos',
+      patterns: ['pago','pagos','pagan','factoring','cobrar','dinero','financiamiento','payment','payments','pay','collect','money','financing'],
+      reply: {
+        es: '💰 **Pagos y factoring**\n\nDamos seguimiento a tus pagos y coordinamos con los brokers para que cobres en tiempo.\n\nSi necesitas opciones de **factoring**, un asesor te orienta sobre las alternativas disponibles para tu operación.\n\n¿Te contactamos?',
+        en: '💰 **Payments and factoring**\n\nWe track your payments and coordinate with brokers so you get paid on time.\n\nIf you need **factoring** options, an advisor guides you through the alternatives available for your operation.\n\nShall we contact you?'
+      },
+      chips: { es: ['Precios','Contacto','Hablar con un asesor'], en: ['Pricing','Contact','Talk to an advisor'] }
+    },
+    {
+      id: 'bot',
+      patterns: ['quien eres','eres un bot','eres humano','tu nombre','julian','robot','inteligencia artificial','como te llamas','eres real','who are you','are you a bot','are you human','your name','ai','artificial intelligence','what is your name','are you real'],
+      reply: {
+        es: '🤖 Soy **Julián**, el asistente de IA de Latino Proud Dispatch.\n\nNo soy humano (todavía 😄), pero conozco bien nuestros servicios. Si tu caso necesita a una persona, te conecto con un asesor real.\n\n¿En qué te ayudo?',
+        en: '🤖 I’m **Julián**, the AI assistant at Latino Proud Dispatch.\n\nI’m not human (yet 😄), but I know our services well. If your case needs a person, I’ll connect you with a real advisor.\n\nHow can I help?'
+      },
+      chips: { es: ['Servicios','Contacto','Hablar con un asesor'], en: ['Services','Contact','Talk to an advisor'] }
+    },
+    {
+      id: 'web',
+      patterns: ['pagina','sitio','web','seccion','formulario','boton','navegar','menu','testimonios','page','site','section','form','button','navigate','testimonials'],
+      reply: {
+        es: '🧭 **Navegación del sitio**\n\nEn esta página encuentras:\n• **Servicios** — despacho, permisos, asesoría y programas.\n• **Nosotros** — quiénes somos y nuestros números.\n• **Proceso** — los 4 pasos para empezar.\n• **Programas** — MC Leasing y Hotshot.\n• **Testimonios** y **Contacto** con formulario.\n\nUsa el menú superior para ir a cada sección. ¿Te ayudo con algo más?',
+        en: '🧭 **Site navigation**\n\nOn this page you will find:\n• **Services** — dispatch, permits, advisory and programs.\n• **About** — who we are and our numbers.\n• **Process** — the 4 steps to get started.\n• **Programs** — MC Leasing and Hotshot.\n• **Testimonials** and **Contact** with form.\n\nUse the top menu to jump to each section. Can I help with anything else?'
+      },
+      chips: { es: ['Servicios','Cómo empezar','Contacto'], en: ['Services','How to start','Contact'] }
+    },
+    {
+      id: 'gracias',
+      patterns: ['gracias','te agradezco','mil gracias','thanks','thank you','appreciated','much appreciated','very kind'],
+      reply: {
+        es: '¡Con gusto! 🙌 Si necesitas algo más, aquí estoy.\n\n¿Te ayudo con algo más?',
+        en: 'Happy to help! 🙌 If you need anything else, I’m here.\n\nAnything else I can help with?'
+      },
+      chips: { es: ['Servicios','Precios','Contacto'], en: ['Services','Pricing','Contact'] }
+    },
+    {
+      id: 'despedida',
+      patterns: ['adios','hasta luego','nos vemos','bye','chao','hasta pronto','goodbye','see you','see you soon','later'],
+      reply: {
+        es: '¡Gracias por escribirnos! 🙌 Aquí estaré cuando necesites.\n\nSi quieres cerrar el trato, escríbenos por WhatsApp y un asesor te atiende de inmediato. ¡Buen camino! 🚛',
+        en: 'Thanks for reaching out! 🙌 I’ll be here whenever you need.\n\nIf you want to close the deal, message us on WhatsApp and an advisor will assist you right away. Safe travels! 🚛'
+      },
+      chips: { es: ['Contacto','Servicios'], en: ['Contact','Services'] }
+    }
+  ];
+
+  var FALLBACK = {
+    reply: {
+      es: 'Hmm, no estoy seguro de haber entendido bien 🤔\n\nPuedo ayudarte con:\n• Servicios (despacho, permisos, asesoría, programas)\n• Permisos: MC, DOT, UCR y BOC-3\n• Precios y cotización\n• Cómo empezar y requisitos\n• Horarios y cobertura\n\nSi tu pregunta es más específica, escríbeme por WhatsApp y un asesor humano te atiende.',
+      en: 'Hmm, I’m not sure I got that 🤔\n\nI can help with:\n• Services (dispatch, permits, advisory, programs)\n• Permits: MC, DOT, UCR and BOC-3\n• Pricing and quotes\n• How to start and requirements\n• Hours and coverage\n\nIf your question is more specific, message us on WhatsApp and a human advisor will help you.'
+    },
+    chips: { es: ['Servicios','Permisos','Precios','Contacto'], en: ['Services','Permits','Pricing','Contact'] }
+  };
+
+  function normalize(str){
+    return String(str).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
+  }
+  function escapeRegex(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  function escapeHtml(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function formatText(str){ return escapeHtml(str).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>'); }
+
+  function scoreIntent(intent, text){
+    var score = 0;
+    for (var i = 0; i < intent.patterns.length; i++) {
+      var p = normalize(intent.patterns[i]);
+      if (!p) continue;
+      var isShort = p.length <= 4;
+      var hasSpace = p.indexOf(' ') !== -1;
+      if (isShort || hasSpace) {
+        var re = new RegExp('(?:^|\\s)' + escapeRegex(p) + '(?:\\s|$)');
+        if (re.test(text)) score += p.length * 2 + 4;
+      } else if (text.indexOf(p) !== -1) {
+        score += p.length + 2;
+      }
+    }
+    return score;
+  }
+  function matchIntent(rawText){
+    var text = normalize(rawText);
+    if (!text) return FALLBACK;
+    var best = null, bestScore = 0;
+    for (var i = 0; i < KB.length; i++) {
+      var s = scoreIntent(KB[i], text);
+      if (s > bestScore) { bestScore = s; best = KB[i]; }
+    }
+    return (best && bestScore >= 4) ? best : FALLBACK;
+  }
+
+  function replyOf(intent){
+    var lang = getLang();
+    return intent.reply[lang] || intent.reply.es;
+  }
+  function chipsOf(intent){
+    var lang = getLang();
+    if (!intent.chips) return DEFAULT_CHIPS[lang];
+    return intent.chips[lang] || intent.chips.es;
+  }
+
+  var launcher  = document.getElementById('chatLauncher');
+  var dock      = document.getElementById('floatDock');
+  var win       = document.getElementById('chatWindow');
+  var closeBtn  = document.getElementById('chatClose');
+  var body      = document.getElementById('chatBody');
+  var chipsWrap = document.getElementById('chatChips');
+  var formChat  = document.getElementById('chatForm');
+  var input     = document.getElementById('chatInput');
+  var sendBtn   = document.getElementById('chatSend');
+
+  var started = false;
+  var busy = false;
+  var typingEl = null;
+
+  function scrollToBottom(){ body.scrollTop = body.scrollHeight; }
+
+  function addMessage(text, who){
+    var row = document.createElement('div');
+    row.className = 'msg msg--' + who;
+    var bubble = document.createElement('div');
+    bubble.className = 'msg__bubble';
+    bubble.innerHTML = formatText(text);
+    row.appendChild(bubble);
+    body.appendChild(row);
+    scrollToBottom();
+    return row;
+  }
+  function showTyping(){
+    removeTyping();
+    var row = document.createElement('div');
+    row.className = 'msg msg--bot msg--typing';
+    row.innerHTML = '<div class="msg__bubble"><span></span><span></span><span></span></div>';
+    body.appendChild(row);
+    typingEl = row;
+    scrollToBottom();
+  }
+  function removeTyping(){ if (typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl); typingEl = null; }
+
+  function setChips(list){
+    chipsWrap.innerHTML = '';
+    if (!list || !list.length) return;
+    list.forEach((label, i) => {
+      var chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'chat-chip';
+      chip.textContent = label;
+      chip.style.animationDelay = (i * 45) + 'ms';
+      chip.addEventListener('click', () => { if (busy) return; handleUserMessage(label); });
+      chipsWrap.appendChild(chip);
+    });
+  }
+
+  function setBusy(state){
+    busy = state;
+    input.disabled = state;
+    sendBtn.disabled = state;
+    if (!state) input.focus();
+  }
+
+  function respond(intent){
+    setBusy(true);
+    setChips([]);
+    showTyping();
+    var reply = replyOf(intent);
+    var delay = Math.min(1500, 420 + reply.length * 6);
+    setTimeout(() => {
+      removeTyping();
+      addMessage(reply, 'bot');
+      setChips(chipsOf(intent));
+      setBusy(false);
+    }, delay);
+  }
+
+  function handleUserMessage(text){
+    var clean = String(text || '').trim();
+    if (!clean || busy) return;
+    addMessage(clean, 'user');
+    input.value = '';
+    respond(matchIntent(clean));
+  }
+
+  function greet(){
+    setBusy(true);
+    showTyping();
+    setTimeout(() => {
+      removeTyping();
+      addMessage(GREETING[getLang()] || GREETING.es, 'bot');
+      setChips(DEFAULT_CHIPS[getLang()] || DEFAULT_CHIPS.es);
+      setBusy(false);
+    }, 800);
+  }
+
+  function openChat(){
+    win.classList.add('is-open');
+    win.setAttribute('aria-hidden', 'false');
+    dock.classList.add('is-hidden');
+    launcher.classList.add('seen');
+    launcher.setAttribute('aria-expanded', 'true');
+    launcher.classList.remove('show-tip');
+    if (!started) { started = true; greet(); }
+    setTimeout(() => { if (!busy) input.focus(); }, 320);
+  }
+  function closeChat(){
+    win.classList.remove('is-open');
+    win.setAttribute('aria-hidden', 'true');
+    dock.classList.remove('is-hidden');
+    launcher.setAttribute('aria-expanded', 'false');
+  }
+
+  launcher.addEventListener('click', openChat);
+  closeBtn.addEventListener('click', closeChat);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && win.classList.contains('is-open')) closeChat();
+  });
+  formChat.addEventListener('submit', e => {
+    e.preventDefault();
+    handleUserMessage(input.value);
+  });
+
+  // Botones que abren a Julián (hero, etc.)
+  document.querySelectorAll('[data-open-chat]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      openChat();
+    });
+  });
+
+  // Al cambiar idioma, si el chat está abierto, refrescamos los chips
+  // y avisamos al usuario del cambio en su idioma actual.
+  window.addEventListener('lpd:langchange', (ev) => {
+    if (started) {
+      setChips(DEFAULT_CHIPS[ev.detail.lang] || DEFAULT_CHIPS.es);
+    }
+  });
+
+  setTimeout(() => { if (!started) launcher.classList.add('show-tip'); }, 7000);
+  setTimeout(() => { launcher.classList.remove('show-tip'); }, 16000);
+})();
+</script>
+</body>
+</html>
